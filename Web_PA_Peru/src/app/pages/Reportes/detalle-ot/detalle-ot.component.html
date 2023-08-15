@@ -1,0 +1,637 @@
+<div class="card border-left-warning  shadow   ">
+    <div class="card-header">
+        <h5 class="headerTitle"> REPORTE DETALLE OT </h5>
+    </div>
+    <div class="card-body">
+
+        <a id="id_link" href="" download style="display:none">link</a>
+
+        <form [formGroup]="formParamsFiltro">
+            <div class="row" style=" margin-top: -15px;">
+                <div class="col-md-2">
+                    <label for=""> Servicio</label>
+                    <select id="cboServicio" class="form-control comboBox select2Filtro" formControlName="idServicio">
+                        <option value="0"  > [ --TODOS-- ]</option>
+                        <option [value]="tipo.id_servicio" *ngFor="let tipo of servicios">{{tipo.nombreServicio}}</option>
+                    </select>
+                </div>
+                <div class="col-md-2">
+                    <label for=""> Tipo OT</label>
+                    <select class="form-control comboBox " formControlName="idTipoOT">
+                        <option value="0"> [ --SELECCIONE-- ]</option>
+                        <option [value]="tipo.id_detalleTabla" *ngFor="let tipo of tipoOrdenTrabajo">{{tipo.descripcion_grupoTabla}}</option>
+                    </select>
+                </div>
+                <div class="col-md-2">
+                    <label for=""> Sub Contrata</label>
+                    <select id="cboSubContrara" class="form-control comboBox select2Filtro " formControlName="idProveedor">
+                        <option value="0"> [ --TODOS-- ]</option>
+                        <option [value]="item.id_Empresa" *ngFor="let item of proveedor">{{item.razonSocial_Empresa}}</option>
+                    </select>
+                </div>
+                <div class="col-md-2">
+                    <label class="control-label"> Rango Fechas </label>
+                    <div class="input-group">
+                        <input class="form-control" #datepickerYMD="bsDatepicker" bsDatepicker formControlName="fecha_ini" [bsConfig]="{ dateInputFormat: 'DD/MM/YYYY', containerClass: 'theme-dark-blue'}">
+                        <span class="input-group-addon">-</span>
+                        <input class="form-control" #datepickerYMD="bsDatepicker" bsDatepicker formControlName="fecha_fin" [bsConfig]="{ dateInputFormat: 'DD/MM/YYYY', containerClass: 'theme-dark-blue'}">
+                    </div>
+                </div>
+                <div class="col-md-2 ">
+                    <label for=""> Estado</label>
+                    <select id="cboEstado" class="form-control comboBox select2Filtro" formControlName="idEstado">
+                        <option value="0"> [ --TODOS-- ]</option>
+                        <option [value]="estado.id_Estado" *ngFor="let estado of estados">{{estado.descripcion_estado}}</option>
+                    </select>
+                </div>
+                <div class="col-md-2">
+                    <div class="mt-4">
+                        <button class="btn btn-primary  btn-block " (click)="mostrarInformacion()" style="font-size: 13px;">  <i class="fas fa-search"> Actualizar</i> </button>
+                    </div>
+                </div>
+            </div>
+        </form>
+
+        <div class="row mt-2">
+            <div class="col-12">
+
+                <div class="d-flex justify-content-between " *ngIf="this.ordenTrabajoCab.length > 0">
+                    <div class="">
+                        <!-- <div class="custom-control custom-checkbox custom-control-inline" style="margin-left: 5px;">
+                            <input type="checkbox" [id]="99" [(ngModel)]="checkeadoAll" (click)="marcarTodos()" class="custom-control-input">
+                            <label class="custom-control-label" [for]="99"> Marcar Todo </label>
+                        </div> -->
+                    </div>
+                    <div class="">
+                        <div class="p-2 bd-highlight">
+                            <input type="text" class="form-control form-control-sm " placeholder="Auto Busquedas" maxlength="50" [(ngModel)]="filtrarMantenimiento">
+                        </div>
+                    </div>
+                    <div class="">
+                        <div class="p-2"> 
+                            <img src="./assets/img/descargar.png"   tooltip="Exportar " placement="auto" (click)="descargarGrilla()"  >
+                        </div>
+                    </div>
+                </div>
+
+                <div class="search-results tableFixHead">
+                    <table class="table  table-hover table-bordered table-sm">
+                        <thead class="theadTable">
+
+                            <tr style="height: 40px !important;">
+                                <th class="text-center">SERVICIO
+                                </th>
+                                <th class="text-center">ESTADO
+                                </th>
+                                <th class="text-center">TIPO DE ORDEN
+                                </th>
+                                <th class="text-center">NRO OBRA/ TD
+                                </th>
+                                <th class="text-center">SED
+                                </th>
+                                <th class="text-center">NRO SUMINISTRO
+                                </th>
+  
+                                <th class="text-center">DIRECCION
+                                </th>
+
+                                <th class="text-center">DISTRITO
+                                </th>
+                                <th class="text-center">VIAJE INDEBIDO
+                                </th>
+                                <th class="text-center">FECHA ORIGEN
+                                </th>
+                                <th class="text-center">USUARIO APROBACION RECEPCION
+                                </th>
+                                <th class="text-center">FECHA APROBACION </th>
+
+                                <th class="text-center"> USUARIO APROBACION ORIGEN</th>
+                                <th class="text-center"> FECHA APROBACION ORIGEN</th>
+                                
+                                <th class="text-center"> MES</th>
+                                <th class="text-center">FECHA ASIGNACION
+                                </th>
+                                <th class="text-center">FECHA ENVIO MOVIL
+                                </th>
+                                <th class="text-center">EMPRESA CONTRATISTA
+                                </th>
+                                <th class="text-center"> JEFE CUADRILLA
+                                </th>
+                                <th class="text-center">FECHA DE REGISTRO
+                                </th>
+                                <th class="text-center">VEREDA M2
+                                </th>
+
+                                <th class="text-center">DESMONTE RECOGIDO M3
+                                </th>
+                                <th class="text-center">DESMONTE GENERADO M3
+                                </th>
+
+                                <th class="text-center">Desmonte Origen</th>
+                                <th class="text-center">Jefe Cuadrilla Origen</th>
+                                <th class="text-center">Empresa Origen</th>
+
+
+                                <th class="text-center">USUARIO APROBACION CANCELACION
+                                </th>
+
+                                <th class="text-center">FECHA CANCELACION
+                                </th>
+                                <th class="text-center">TOTAL S/. VEREDAS M2
+                                </th>
+
+                                <th class="text-center">TOTAL S/. EN DESMONTE RECOGIDO M3
+                                </th>
+                                <th class="text-center">TOTAL S/. EN DESMONTE GENERADO M3
+                                </th>
+                                <th class="text-center">FUERA DE PLAZO
+                                </th>
+                                <th class="text-center"> INFORME</th>
+<!--                            <th class="text-center"> LARGO</th>
+                                <th class="text-center"> ANCHO</th>
+                                <th class="text-center"> ALTURA</th>
+                                <th class="text-center"> COMENTARIO DEL GESTOR</th>
+                                <th class="text-center"> ESTATUS </th> -->
+
+                                <th class="text-center"> VER        </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+
+                            <tr *ngFor="let item of ordenTrabajoCab |  filter: filtrarMantenimiento  ; index as j" style="color: black;" [ngStyle]="{'background-color':item.color}">
+                                <td>
+                                    <div style="width: 200px;">
+                                        {{item.servicio}}
+                                    </div>
+                                </td>
+                                <td>
+                                    <div style="width: 250px;">
+                                        {{item.estado}}
+                                    </div>
+                                </td>
+                                <td>{{item.tipoorden}}</td>
+                                <td>
+                                    <div style="width: 120px;">
+                                        {{item.nroobratd}}
+                                    </div>
+                                </td>
+                                <td>{{item.sed}}</td>
+                                <td>{{item.nrosuministro}}</td>
+                                 <td>
+                                    <div style="width: 300px;">
+                                        {{item.direccion}}
+                                    </div>
+                                </td>
+                                <td>
+                                    <div style="width: 300px;">
+                                        {{item.distrito}}
+                                    </div>
+                                </td>
+
+                                <td>{{item.viajeindebido}}</td>
+                                <td>{{item.fechaorigen}}</td>
+                                <td> 
+                                    <div style="width: 250px;">
+                                        {{item.usuarioaprobacionrecepcion}}
+                                    </div>
+                                </td>
+                                <td>{{item.fechaaprobacion}}</td>
+
+                                <td> 
+                                    <div style="width: 250px;">
+                                        {{item.usuarioAprobacionOrigen}}
+                                    </div>
+                                </td>
+                                <td>{{item.fechaAprobacionOrigen}}</td>
+
+                                <td>{{item.mes}}</td>
+                                <td>{{item.FechaAsignacion}}</td>
+                                <td>{{item.fechaenviomovil}}</td>
+                                <td>{{item.empresacontratista}}</td>
+                                <td>
+                                    <div style="width: 250px;">
+                                        {{item.jefecuadrilla}}
+                                    </div>
+                                </td>
+                                <td>{{item.fecharegistro}}</td>
+                                <td class="text-right">{{item.veredam2 | number }}</td>
+                                <td class="text-right">{{item.desmonterecogidom3 | number }}</td>
+
+                                <td class="text-right">{{item.desmontegeneradom3 | number }}</td>
+
+                                <td>{{item.desmonteOrigen}}</td>
+                                <td> 
+                                    <div style="width: 250px;">
+                                        {{item.jefecuadrillaorigen}}
+                                    </div>
+                                </td>
+                                <td>{{item.empresaorigen}}</td>
+                                <td>{{item.usuarioaprobacioncancelacion}}</td>
+                                <td>{{item.fechacancelacion}}</td>
+                                <td class="text-right">{{item.totalveredasm2 | number}}</td>
+                                <td class="text-right">{{item.totaldesmonterecogidom3 | number }}</td>
+                                <td class="text-right">{{item.totaldesmontegeneradom3 | number }}</td>
+                                <td>{{item.fueraplazo}}</td>
+                                <td class="text-center">
+ 
+                                    <img src="./assets/img/ver.png"   tooltip="Ver Informe "  (click)="abrirModal_OT(item)"  >
+                                </td>
+
+                                <!-- <td>{{item.largo}}</td>
+                                <td>{{item.ancho}}</td>
+                                <td>{{item.altura}}</td>
+                                <td>{{item.comentarioGestor}}</td>
+                                <td>{{item.estatus}}</td> -->
+
+                                <td class="text-center">
+                                    <!-- <span class="badge badge-info puntero" style="padding: 5px;"  *ngIf="item.urlArchivo"  (click)="downloadFormat(item)">  Ver </span> -->
+                                    <i class="fas fa-arrow-alt-circle-down puntero" title="Descargar Archivo Cargado" *ngIf="item.urlArchivo"  style="color: black; font-size: 20px;" (click)="downloadFormat(item)"> </i>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+            </div>
+        </div>
+
+    </div>
+</div>
+
+
+
+<div class="modal fade " id="modalMapa" data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="myExtraLargeModalLabel  " aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="staticBackdropLabel">Ubicacion Google Maps</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-md-12 modal_body_map">
+                        <div class="location-map" id="location-map">
+                            <div style="width: 600px; height: 400px;" #mapa id="id_mapa"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<div class="modal fade " id="modal_OT" data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="myExtraLargeModalLabel  " aria-hidden="true">
+    <div class="modal-dialog modal-xl modal-dialog-scrollable " role="document">
+        <div class="modal-content">
+            <div class="p-3 card ">
+                <div class="d-flex justify-content-between flotante">
+                    <div class=" bd-highlight">
+                        <i class="fas fa-arrow-circle-left  fa-2x puntero" title="Retornar" (click)="cerrarModal_OT()">  </i>
+                    </div>
+                    <div class=" bd-highlight">
+                        <h5 class="headerTitleModal"> {{tituloModal}} </h5>
+                    </div>
+                    <div class=" bd-highlight">
+                        <i class="far fa-times-circle fa-2x puntero" title="Retornar" (click)="cerrarModal_OT()">  </i>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-body">
+
+                <div class="row p-3 " style=" margin-top: -15px;">
+                    <div class="col-md-3">
+                        <label> Nro Orden</label>
+                        <input type="text" class="form-control disabledForm" [(ngModel)]="nroObraParteDiario_Global">
+                    </div>
+                    <div class="col-md-3">
+                        <label> Fecha y Hora de Registro</label>
+                        <input type="text" class="form-control disabledForm" [(ngModel)]="fechaHora_Global">
+                    </div>
+                    <div class="col-md-3" *ngIf="id_tipoOTGlobal == 5">
+                        <label> Trabajo Origen</label>
+                        <input type="text" class="form-control disabledForm" [(ngModel)]="tipoTrabajo_OTOrigenGlobal">
+                    </div>
+
+                </div>
+
+                <div class="row">
+                    <div class="col-12">
+                        <ul class="nav nav-pills mb-3" id="pills-tab" role="tablist" style="background-color: #002f77;">
+
+                            <li class="nav-item TabControl">
+                                <a class="nav-link active" style="color:white !important" (click)="selectedTabControlDetalle = 'DATOS GENERALES' " data-toggle="pill" [class.active]="selectedTabControlDetalle==='DATOS GENERALES'" role="tab" aria-controls="pills-home" aria-selected="true">DATOS GENERALES</a>
+                            </li>
+                            <li class="nav-item TabControl" *ngIf="flagMedidas">
+                                <a class="nav-link active" style="color:white !important" (click)="selectedTabControlDetalle = 'MEDIDAS' " data-toggle="pill" [class.active]="selectedTabControlDetalle==='MEDIDAS'" role="tab" aria-controls="pills-home" aria-selected="true">MEDIDAS</a>
+                            </li>
+                            <li class="nav-item TabControl">
+                                <a class="nav-link active" style="color:white !important" (click)="selectedTabControlDetalle = 'DESMONTE' " data-toggle="pill" [class.active]="selectedTabControlDetalle==='DESMONTE'" role="tab" aria-controls="pills-home" aria-selected="true">DESMONTE</a>
+                            </li>
+                        </ul>
+
+                        <div class="containerDetalle">
+                            <div class="tab-content" id="pills-tabContent">
+
+                                <!-- Datos Generales -->
+                                <div *ngIf="selectedTabControlDetalle === tabControlDetalle[0]" role="tabpanel" class="tab-pane active">
+
+                                    <div class="card border-primary	">
+                                        <div class="card-body ">
+
+                                            <form [formGroup]="formParamsDatosG" style=" margin-top: -15px;">
+
+                                                <div class="row">
+                                                    <div class="col-md-12">
+                                                        <label> Direccion</label>
+                                                        <input type="text" class="form-control  disabledForm" maxlength="200" formControlName="direccion">
+                                                    </div>
+                                                </div>
+
+                                                <div class="row">
+                                                    <div class="col-md-12">
+                                                        <label> Distrito</label>
+                                                        <select class="form-control comboBox  disabledForm" formControlName="idDistrito">
+                                                            <option value="0"> [ -- SELECCIONE -- ]</option>
+                                                            <option [value]="dist.id_Distrito" *ngFor="let dist of distritos">{{dist.nombreDistrito}}</option>
+                                                        </select>
+                                                    </div>
+                                                </div>
+
+                                                <div class="row">
+                                                    <div class="col-md-12">
+                                                        <label> Referencia</label>
+                                                        <input type="text" class="form-control disabledForm " maxlength="200" formControlName="referencia">
+                                                    </div>
+                                                </div>
+
+                                                <div class="row">
+                                                    <div class="col-md-12">
+                                                        <label> Descripcion del Trabajo</label>
+                                                        <input type="text" class="form-control disabledForm" maxlength="200" formControlName="descripcionTrabajo">
+                                                    </div>
+                                                </div>
+
+                                                <div class="row">
+                                                    <div class="col-md-12">
+                                                        <label> Estado</label>
+                                                        <select class="form-control comboBox " formControlName="idEstado">
+                                                            <option value="0"> [ -- SELECCIONE -- ]</option>
+                                                            <option [value]="estado.id_Estado" *ngFor="let estado of estados">{{estado.descripcion_estado}}</option>
+                                                         </select>
+                                                    </div>
+                                                </div>
+
+
+                                                <div class="row">
+                                                    <div class="col-md-12">
+                                                        <label> Observacion</label>
+                                                        <input type="text" class="form-control " maxlength="200" formControlName="observacion">
+                                                    </div>
+                                                </div>
+
+                                            </form>
+
+                                            <br>
+                                            <!-- <div class="row" *ngIf="id_estadoOTGlobal != 6 ? false: true ">
+                                                <div class="col-md-12 text-center">
+                                                    <button class="btn  btn-sm  btn-primary" (click)="Aprobar_OT()" title="Aprobar la Orden de Trabajo">
+                                                        <i class="fas fa-save"> Aprobar OT</i> 
+                                                    </button>
+                                                </div>
+                                            </div> -->
+
+                                        </div>
+                                    </div>
+
+                                </div>
+
+                                <!-- Medidas -->
+                                <div *ngIf="selectedTabControlDetalle === tabControlDetalle[1] " role="tabpanel" class="tab-pane active">
+
+                                    <div class="card border-primary ">
+                                        <div class="card-body ">
+
+                                            <div class="row">
+                                                <div class="col-md-12 text-right">
+                                                    <!-- <button style="margin-top: -22px !important; font-size: 11px;" class="btn  btn-sm  btn-warning " (click)="descargarFotosOT('P')" title="Descargar">
+                                                            <i class="fas fa-file-download"> Descargar</i> 
+                                                    </button> -->
+                                                    <img src="./assets/img/descargar.png"   tooltip="Descargar Fotos " (click)="descargarFotosOT('P')"  >
+                                                </div>
+                                            </div>
+
+                                            <div class=" table-responsive mt-2" *ngIf="id_OTGlobal > 0">
+                                                <table class="table table-hover table-sm">
+                                                    <thead class="theadTable thead-dark">
+                                                        <tr>
+                                                            <th scope="col">#</th>
+                                                            <th scope="col" class="text-center">Tipo Material</th>
+                                                            <th scope="col" class="text-center">Largo</th>
+                                                            <th scope="col" class="text-center">Ancho</th>
+                                                            <th scope="col" class="text-center">Altura</th>
+                                                            <th scope="col" class="text-center">Total</th>
+                                                            <th colspan="2" class="text-center">Acciones</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        <tr *ngFor="let item of medidasDetalle; index as i">
+                                                            <th scope="row"> {{i + 1}} </th>
+                                                            <td>{{item.tipoMaterial}}</td>
+                                                            <td class="text-right">{{item.largo | number }}</td>
+                                                            <td class="text-right">{{item.ancho | number }}</td>
+                                                            <td class="text-right">{{item.espesor | number}}</td>
+                                                            <td class="text-right">{{item.total | number }}</td>
+                                                            <td class="text-center">
+                                                                <!-- <span class="badge badge-primary puntero" style="padding: 5px;" (click)="abrirModal_visorFotos(item)">  Ver Fotos </span> -->
+                                                                <img src="./assets/img/galeria2.png"   tooltip="Ver Fotos " (click)="abrirModal_visorFotos(item)"  >
+                                                            </td>
+                                                        </tr>
+                                                    </tbody>
+                                                    <tfoot>
+                                                        <tr>
+                                                            <td colspan="4"></td>
+                                                            <td style="font-size: 12px; font-weight: 600;" class="text-right">Total:</td>
+                                                            <td scope="col" style=" font-size: 12px; font-weight: 800;" class="text-right" style="color:yellowgreen">{{totalGlobal | number }}</td>
+                                                            <td scope="col"></td>
+                                                        </tr>
+                                                    </tfoot>
+                                                </table>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </div>
+
+                                <!-- Desmonte -->
+                                <div *ngIf="selectedTabControlDetalle === tabControlDetalle[2]" role="tabpanel" class="tab-pane active">
+
+                                    <div class="card border-primary ">
+                                        <div class="card-body ">
+
+                                            <div class=" table-responsive" *ngIf="id_OTGlobal > 0">
+                                                <table class="table table-hover   table-sm">
+                                                    <thead class="theadTable thead-dark">
+                                                        <tr>
+                                                            <th scope="col">#</th>
+                                                            <th scope="col" class="text-center">Tipo </th>
+                                                            <th scope="col" class="text-center">Largo</th>
+                                                            <th scope="col" class="text-center">Ancho</th>
+                                                            <th scope="col" class="text-center">Altura</th>
+                                                            <th scope="col" class="text-center">Total</th>
+                                                            <th colspan="2" class="text-center">Acciones</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        <tr *ngFor="let item of desmonteDetalle; index as i">
+                                                            <th scope="row"> {{i + 1}} </th>
+                                                            <td>{{item.tipoMaterial}}</td>
+                                                            <td class="text-right">{{item.largo | number }}</td>
+                                                            <td class="text-right">{{item.ancho | number }}</td>
+                                                            <td class="text-right">{{item.espesor | number}}</td>
+                                                            <td class="text-right">{{item.total | number }}</td>
+                                                            <td class="text-center">
+                                                                <!-- <span class="badge badge-primary puntero" style="padding: 5px;" (click)="abrirModal_visorFotos(item)">  Ver Fotos </span> -->
+                                                                <img src="./assets/img/galeria2.png"   tooltip="Ver Fotos " (click)="abrirModal_visorFotos(item)"  >
+                                                            </td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+                                            </div>
+
+                                            <div class="d-flex justify-content-end">
+                                                <div class="p-2 bd-highlight"></div>
+                                                <div class="p-2 bd-highlight">
+                                                    <label> Importe Total en Recojo de Desmonte :</label>
+                                                </div>
+                                                <div class="p-2 bd-highlight">
+                                                    <b style="color: yellowgreen;">   {{totalGlobal14 | number }} </b>
+                                                </div>
+                                            </div>
+
+                                            <div class="d-flex justify-content-end">
+                                                <div class="p-2 bd-highlight"></div>
+                                                <div class="p-2 bd-highlight">
+                                                    <label> Importe Total Pendiente de Recojo de Desmonte :</label>
+                                                </div>
+                                                <div class="p-2 bd-highlight">
+                                                    <b style="color: orange;">   {{totalGlobal15 | number }} </b>
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                    </div>
+
+                                </div>
+
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" (click)="cerrarModal_OT()">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<div class="modal fade " id="modal_visorFotos" data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="myExtraLargeModalLabel  " aria-hidden="true">
+    <div class="modal-dialog modal-lg   modal-dialog-scrollable " role="document">
+        <div class="modal-content">
+            <div class="p-3 card " style="background-color: #002f77;">
+                <div class="d-flex justify-content-between flotante">
+                    <div class=" bd-highlight">
+                        <i class="fas fa-arrow-circle-left  fa-2x puntero" style="color: gray !important" title="Retornar" (click)="cerrarModal_visor()">  </i>
+                    </div>
+                    <div class=" bd-highlight">
+                        <h5 style="color: white;"> Visor de Fotos </h5>
+                    </div>
+                    <div class=" bd-highlight">
+                        <i class="far fa-times-circle fa-2x puntero" style="color: gray !important" title="Retornar" (click)="cerrarModal_visor()">  </i>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-body">
+ 
+
+                <div class="row">
+                    <div class="col-md-9">
+                        <div class="row" *ngIf="this.detalleOT">
+                            <div class="col-xs-6 col-md-3">
+                                <label> 
+                                    {{ (this.id_tipoOTGlobal == 3 || this.id_tipoOTGlobal == 4 )? 'TIPO MATERIAL :  ' : 'TIPO DESMONTE : '  }} {{this.detalleOT.tipoMaterial}}
+                                </label>
+                            </div>
+                            <div class="col-xs-6 col-md-3">
+                                <label for=""> Cant Paños :  {{this.detalleOT.cantPanios}} </label>
+                            </div>
+                            <div class="col-xs-6 col-md-3">
+                                <label for=""> Med. Horizontal :  {{this.detalleOT.medHorizontal}}  </label>
+                            </div>
+                            <div class="col-xs-6 col-md-3">
+                                <label for="">  Med. Vertical :  {{this.detalleOT.medVertical}}  </label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <!-- <button style="margin-top: -5px !important; font-size: 11px;" class="btn  btn-sm  btn-warning " (click)="descargarFotosOT_visor('V')" title="Descargar">
+                            <i class="fas fa-file-download"> Descargar</i> 
+                        </button> -->
+                        <img src="./assets/img/descargar.png"   tooltip="Descargar Fotos " placement="auto" (click)="descargarFotosOT_visor('V')"  >
+                    </div>
+                </div>
+
+
+
+
+                <div class="row" *ngIf="this.detalleOT">
+                    <div class=" col-md-3 col-6">
+                        <label for=""> Largo : {{this.detalleOT.largo}} </label>
+                    </div>
+                    <div class="col-md-3 col-6">
+                        <label for=""> Ancho :  {{this.detalleOT.ancho}} </label>
+                    </div>
+                    <div class="col-xs-6 col-md-3">
+                        <label for=""> Altura :  {{this.detalleOT.espesor}}  </label>
+                    </div>
+                    <div class="col-xs-6 col-md-3">
+                        <label for=""> Total :  {{this.detalleOT.total}}  </label>
+                    </div>
+                </div>
+                <br>
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="card-columns animated fadeIn">
+                            <div class="card shadow  border-cards " *ngFor="let foto of fotosDetalle ">
+                                <a>
+                                    <img [src]="foto.urlFoto" class="card-img-top img_anuncio" alt="...">
+                                </a>
+                                <div class="card-body ">
+                                    <div class="text-center ">
+                                        <label class="card-text ">  {{foto.nombreFoto}}</label>
+                                    </div>
+                                    <!-- <br>
+                                    <div class="text-center " style="margin-top: -15px !important; margin-bottom: -5px;" *ngIf="id_estadoOTGlobal != 6 ? false: true ">
+                                        <button type="button" class="btn btn-block btn-outline-danger" (click)="anulandoFoto(foto)"> Anular</button>
+                                    </div> -->
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" (click)="cerrarModal_visor()">Close</button>
+            </div>
+        </div>
+    </div>
+</div>

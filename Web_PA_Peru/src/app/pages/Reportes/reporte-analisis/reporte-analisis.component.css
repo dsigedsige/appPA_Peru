@@ -1,0 +1,8 @@
+.listaRadios .form-check .form-check-label {
+    color: red !important;
+}
+
+.botonFile,
+input {
+    height: 20px;
+}

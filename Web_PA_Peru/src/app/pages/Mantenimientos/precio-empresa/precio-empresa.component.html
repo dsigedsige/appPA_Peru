@@ -1,0 +1,262 @@
+<div class="card border-left-warning  shadow   ">
+    <div class="card-header">
+        <h5 class="headerTitle"> REGISTRO DE PRECIO DE EMPRESA </h5>
+    </div>
+    <div class="card-body">
+        <form [formGroup]="formParamsFiltro">
+            <div class="row" style="margin-top: -15px;">
+                <div class="col-md-4">
+                    <label for=""> Empresa </label>
+                    <select class="form-control comboBox" formControlName="idEmpresa">
+                        <option value="0"> [ --TODOS-- ]</option>
+                        <option [value]="item.id" *ngFor="let item of empresas">{{item.descripcion}}</option>
+                    </select>
+                </div>
+                <div class="col-md-4">
+                    <label for=""> Estado</label>
+                    <select class="form-control comboBox" formControlName="idEstado">
+                        <option value="1"> Activo </option>
+                        <option value="0"> Anulado </option>
+                    </select>
+                </div>
+                <div class="col-sm-6 col-md-12 col-lg-4 text-center">
+                    <br>
+                    <div class="text-center">
+                        <button class="btn btn-primary " (click)="mostrarInformacion()" style="font-size: 13px;">  <i class="fas fa-search"> Mostrar</i> </button>
+                        <button class="btn btn-warning ml-2 " (click)="nuevo()" style="font-size: 13px;">  <i class="fa fa-plus-circle"> Nuevo</i> </button>
+                    </div>
+                </div>
+            </div>
+        </form>
+        <hr>
+        <div class="d-flex justify-content-between" style=" margin-top: -15px;">
+            <div class="p-2 bd-highlight"> </div>
+            <div class="p-2 bd-highlight" style="width: 50%;">
+                <input type="text" class="form-control form-control-sm " placeholder="Auto Busquedas" maxlength="50" [(ngModel)]="filtrarMantenimiento">
+            </div>
+            <div class="p-2 bd-highlight"> </div>
+        </div>
+        <div class="search-results tableFixHead">
+            <table class="table  table-hover table-sm">
+                <thead class="theadTable">
+
+                    <tr style="height: 40px !important;">
+                        <th scope="col">#</th>
+                        <th scope="col">empresa </th>
+                        <th scope="col">tipo material</th>
+                        <th scope="col">descripcion </th>
+                        <th scope="col">precio </th>
+                        <th scope="col">Estado</th>
+
+                        <th class="text-center">Editar</th>
+                        <th class="text-center">Anular</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let item of preciosEmpresas |  filter: filtrarMantenimiento  ; index as j" [ngStyle]="item.estado == 0 && {'color': 'red'}">
+                        <th scope="row"> {{j + 1}} </th>
+                        <td>{{item.empresa}}</td>
+                        <td>{{item.descripcionTipoMaterial}}</td>
+                        <td>{{item.tipo}}</td>
+                        <td>{{item.precio | number:'0.1-5'}}</td>
+                        <td>{{item.descripcionEstado}}</td>
+                        <td class="text-center"> 
+                            <button class="btn btn-sm btn-primary" (click)="editar(item) " title="editar" >  <i class="fas fa-edit"  > </i> </button>                   
+                        </td>
+                        <td class="text-center">
+                            <button class="btn btn-sm btn-danger" *ngIf="item.estado > 0" (click)="anular(item, 'Cabecera') " title="anular" >  <i class="fas fa-ban"  > </i> </button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade " id="modal_mantenimiento" data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="myExtraLargeModalLabel  " aria-hidden="true">
+    <div class="modal-dialog  modal-lg " role="document">
+        <div class="modal-content">
+            <div class="modal-body">
+                <div class="p-3 card ">
+                    <div class="d-flex justify-content-between flotante">
+                        <div class=" bd-highlight">
+                            <i class="fas fa-arrow-circle-left  fa-2x puntero" title="Retornar" (click)="cerrarModal()">  </i>
+                        </div>
+                        <div class=" bd-highlight">
+                            <h5 class="headerTitleModal"> REGISTRO DE PRECIO DE EMPRESA </h5>
+                        </div>
+                        <div class=" bd-highlight">
+                            <i class="far fa-times-circle fa-2x puntero" title="Retornar" (click)="cerrarModal()">  </i>
+                        </div>
+                    </div>
+                </div>
+                <hr style="background-color: white;">
+
+                <form [formGroup]="formParams" style=" margin-top: -15px;">
+                    <div id="formContenido" style="padding: 10px;">
+                        <div class="row">
+                            <div class="col-md-8">
+                                <label for=""> Empresa </label>
+                                <select class="form-control comboBox" formControlName="id_empresa" (change)="mostrarInformacion_detalle()"  >
+                                    <option value="0"> [ --TODOS-- ]</option>
+                                    <option [value]="item.id" *ngFor="let item of empresas">{{item.descripcion}}</option>
+                                </select>
+                            </div>
+                        </div>                     
+                        <div class="row">
+                            <div class="col-10 col-md-10">
+                                <label for=""> Tipos de Material </label>
+                                <select class="form-control comboBox" formControlName="id_TipoMaterial">
+                                    <option value="0"> [ --SELECCIONE-- ]</option>
+                                    <option [value]="item.id" *ngFor="let item of tiposMaterial">{{item.descripcion}}</option>
+                                </select>
+                            </div>
+                            <div class="col-2 col-md-2">
+                                <button class="btn btn-info mt-3 " (click)="agregarCombo(1)" title="agregar nuevo Tipo Material" >  <i class="fa fa-plus-circle"></i> </button>
+                            </div>
+                        </div> 
+                        <div class="row">
+                            <div class="col-10 col-md-10">
+                                <label for=""> Baremos </label>
+                                <select class="form-control comboBox" formControlName="id_Baremo" (change)="onChangeBaremo($event)" >
+                                    <option value="0"> [ --SELECCIONE-- ]</option>
+                                    <option [value]="item.id" *ngFor="let item of baremos">{{item.descripcion}}</option>
+                                </select>
+                            </div>
+                            <div class="col-2 col-md-2">
+                                <button class="btn btn-info mt-3 " (click)="agregarCombo(2)" title="agregar baremos">  <i class="fa fa-plus-circle"></i> </button>
+                            </div>
+                        </div> 
+                    </div>
+
+                    <div  style="padding: 10px;">
+                        <div class="row">
+                            <div class="col-md-3">
+                                <label> Precio </label>
+                                <input type="number" class="form-control " formControlName="precio">
+                            </div>
+                            <div class="col-md-5">
+                                <label> Estado</label>
+                                <select class="form-control comboBox" formControlName="estado">
+                                    <option value="-1"> [ --SELECCIONE-- ]</option>
+                                    <option value="1"> Activo </option>
+                                    <option value="0"> Anulado </option>
+                                </select>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="mt-4 text-center">
+                                    <button class="btn btn-success" (click)="saveUpdate()" title="Guardar"> <i class="fas fa-save"></i></button>
+                                    <button class="btn btn-warning ml-2 " (click)="nuevoDet()" title="Nuevo" >  <i class="fa fa-plus-circle"></i> </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+ 
+                </form>
+ 
+
+                <hr>
+                <div class="search-results tableFixHead">
+                    <table class="table  table-hover table-sm">
+                        <thead class="theadTable">
+        
+                            <tr style="height: 40px !important;">
+                                <th scope="col">#</th>
+                                <th scope="col">tipo material</th>
+                                <th scope="col">descripcion </th>
+                                <th scope="col">precio </th>
+                                <th scope="col">Estado</th>        
+                                <th class="text-center">Editar</th>
+                                <th class="text-center">Anular</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let item of preciosEmpresas_Detalle ; index as j" [ngStyle]="item.estado == 0 && {'color': 'red'}">
+                                <th scope="row"> {{j + 1}} </th>
+                                <td>{{item.descripcionTipoMaterial}}</td>
+                                <td>
+                                    <div style="width:250px">
+                                        {{item.tipo}}
+                                    </div>
+                                </td>
+                                <td>{{item.precio | number:'0.1-5'}}</td>
+                                <td>{{item.descripcionEstado}}</td>
+                                <td class="text-center">
+                                    <button class="btn btn-sm btn-primary" (click)="editarDet(item) " title="editar" >  <i class="fas fa-edit"  > </i> </button>          
+                                </td>
+                                <td class="text-center">
+                                    <button class="btn btn-sm btn-danger" *ngIf="item.estado > 0" (click)="anular(item, 'Detalle') " title="anular" >  <i class="fas fa-ban"  > </i> </button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" (click)="cerrarModal()">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<div class="modal fade " id="modal_agregar" data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="myExtraLargeModalLabel  " aria-hidden="true">
+    <div class="modal-dialog " role="document">
+        <div class="modal-content">
+            <div class="modal-body">
+                <div class="p-3 card ">
+                    <div class="d-flex justify-content-between flotante">
+                        <div class=" bd-highlight">
+                            <i class="fas fa-arrow-circle-left  fa-2x puntero" title="Retornar" (click)="cerrarModal_agregar()">  </i>
+                        </div>
+                        <div class=" bd-highlight">
+                            <h5 class="headerTitle"> {{tipoMantenimiento_Modal==1 ? 'AGREGAR TIPO DE MATERIAL' : 'AGREGAR BAREMO'  }} </h5>
+                        </div>
+                        <div class=" bd-highlight">
+                            <i class="far fa-times-circle fa-2x puntero" title="Retornar" (click)="cerrarModal_agregar()">  </i>
+                        </div>
+                    </div>
+                </div>
+                <hr style="background-color: white;">
+                <form [formGroup]="formParamsAgregar" style=" margin-top: -15px;">   
+                    <div class="row">
+                        <div class="col-md-6">
+                            <label> Codigo </label>
+                            <input type="text" class="form-control " maxlength="20" formControlName="codigo">
+                        </div> 
+                    </div>                          
+                    <div class="row"> 
+                        <div class="col-md-12">
+                            <label> Descripcion </label>
+                            <input type="text" class="form-control " formControlName="descripcion">
+                        </div> 
+                    </div>     
+                    <div *ngIf="tipoMantenimiento_Modal == 2">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <label> Precio Baremo</label>
+                                <input type="number" class="form-control " formControlName="precio">
+                            </div>     
+                        </div> 
+                    </div> 
+
+                    <div class="row">    
+                        <div class="col-md-12">
+                            <div class="mt-2 text-center">
+                                <button class="btn btn-success" (click)="save_agregarMantenimiento()" title="Guardar"> <i class="fas fa-save"></i></button>
+                            </div>
+                        </div>
+                    </div> 
+     
+                </form>
+ 
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" (click)="cerrarModal_agregar()">Close</button>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,800 @@
+<div class="card border-left-warning  shadow   ">
+    <div class="card-header">
+        <h5 class="headerTitle"> APROBACION DE ORDEN DE TRABAJO </h5>
+    </div>
+    <div class="card-body">
+
+        <a id="id_link" href="" download style="display:none">link</a>
+
+        <form [formGroup]="formParamsFiltro">
+            <div class="row" style=" margin-top: -15px;">
+                <div class="col-md-3">
+                    <label for=""> Servicio</label>
+                    <select class="form-control comboBox" formControlName="idServicio">
+                        <option value="0"> [ --SELECCIONE-- ]</option>
+                        <option [value]="tipo.id_servicio" *ngFor="let tipo of servicios">{{tipo.nombreServicio}}</option>
+                    </select>
+                </div>
+                <div class="col-md-3">
+                    <label for=""> Tipo OT</label>
+                    <select class="form-control comboBox" formControlName="idTipoOT">
+                        <option value="0"> [ --SELECCIONE-- ]</option>
+                        <option [value]="tipo.id_detalleTabla" *ngFor="let tipo of tipoOrdenTrabajo">{{tipo.descripcion_grupoTabla}}</option>
+                    </select>
+                </div>
+
+                <div class="col-md-3">
+                    <label class="control-label"> Rango Fechas </label>
+                    <div class="input-group">
+                        <input class="form-control" #datepickerYMD="bsDatepicker" bsDatepicker formControlName="fecha_ini" [bsConfig]="{ dateInputFormat: 'DD/MM/YYYY', containerClass: 'theme-dark-blue'  }">
+                        <span class="input-group-addon">-</span>
+                        <input class="form-control" #datepickerYMD="bsDatepicker" bsDatepicker formControlName="fecha_fin" [bsConfig]="{ dateInputFormat: 'DD/MM/YYYY',containerClass: 'theme-dark-blue' }">
+                    </div>
+                </div>
+
+                <div class="col-md-3 ">
+                    <label for=""> Estado</label>
+                    <select class="form-control comboBox" formControlName="idEstado">
+                        <option value="0"> [ --SELECCIONE-- ]</option>
+                        <option [value]="estado.id_Estado" *ngFor="let estado of estados">{{estado.descripcion_estado}}</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="row" style=" margin-top: 0px;">
+                <div class="col-md-3">
+                    <label for=""> Distrito</label>
+                    <select class="form-control comboBox" formControlName="idDistrito">
+                        <option value="0"> [ --TODOS-- ]</option>
+                        <option [value]="dist.id_Distrito" *ngFor="let dist of distritos">{{dist.nombreDistrito}}</option>
+                    </select>
+                </div>
+                <div class="col-md-3">
+                    <label for=""> Sub Contrata</label>
+                    <select class="form-control comboBox" formControlName="idProveedor">
+                        <option value="0"> [ -- TODOS -- ]</option>
+                        <option [value]="item.id_Empresa" *ngFor="let item of proveedor">{{item.razonSocial_Empresa}}</option>
+                    </select>
+                </div>
+                <div class="col-md-3">
+                    <div class="mt-4">
+                        <button class="btn btn-primary  btn-block " (click)="mostrarInformacion()" style="font-size: 13px;">  <i class="fas fa-search"> Actualizar</i> </button>
+                    </div>
+                </div>
+            </div>
+
+        </form>
+
+        <div class="row mt-2">
+            <div class="col-12">
+
+                <div class="d-flex justify-content-between " *ngIf="this.ordenTrabajoCab.length > 0">
+                    <div class="">
+                        <div class="custom-control custom-checkbox custom-control-inline" style="margin-left: 5px;">
+                            <input type="checkbox" [id]="99" [(ngModel)]="checkeadoAll" (click)="marcarTodos()" class="custom-control-input">
+                            <label class="custom-control-label" [for]="99"> Marcar Todo </label>
+                        </div>
+                    </div>
+                    <div class="" style="width: 60%;">
+                        <div class="p-2 bd-highlight">
+                            <input type="text" class="form-control form-control-sm " placeholder="Auto Busquedas" maxlength="50" [(ngModel)]="filtrarMantenimiento">
+                        </div>
+                    </div>
+                    <div class="">
+                        <div class="p-2">
+                            <button class="btn btn-success " style="font-size: 13px;" (click)="aprobarMasivo()">  <i class="fas fa-vote-yea"> </i> Aprobar </button>
+                            <!-- <button class="btn btn-warning ml-2" style="font-size: 13px;" (click)="descargarGrilla()">  <i class="fa fa-download"> </i> Exportar</button> -->
+                            <img src="./assets/img/descargar.png"   tooltip="Exportar " placement="auto" (click)="descargarGrilla()"  >
+                        </div>
+                    </div>
+                </div>
+
+                <div class="search-results tableFixHead">
+                    <table class="table  table-hover table-bordered table-sm">
+                        <thead class="theadTable">
+
+                            <tr style="height: 40px !important;">
+
+                                <th scope="col">check</th>
+                                <th scope="col">#</th>
+                                <th class="text-center">Estado</th>
+                                <th class="text-center">Tipo OT</th>
+                                <th class="text-center">Nro Obra_TD</th>
+                                <th class="text-center">Informe</th>
+                                <th class="text-center">Archivo</th>
+
+                                <th class="text-center">Direccion</th>
+                                <th class="text-center">Distrito</th>
+                                <th class="text-center">Ubicacion</th>
+                                <th class="text-center">Sub Contrata</th>
+                                <th class="text-center">Jefe Cuadrilla</th>
+
+                                <th class="text-center">Veredas M2</th>
+                                <th class="text-center">Desmonte Recogido M3</th>
+                                <th class="text-center">Desmonte Generado M3</th>
+
+                                <th class="text-center">Desmonte Origen</th>
+                                <th class="text-center">Jefe Cuadrilla Origen</th>
+                                <th class="text-center">Empresa Origen</th>
+
+                                <th class="text-center">Fecha Hora Registro</th>
+                                <th class="text-center">Total Volumen</th>
+                                <th class="text-center">Total Desmonte</th>
+                                <th class="text-center">Total Desmonte Recoger</th>
+                                <th class="text-center">Fecha Aprobacion</th>
+                                <th class="text-center">Dias Vencimiento</th>
+                                <th class="text-center">Prioridad</th>
+                                <th class="text-center" *ngIf="idPerfil_global == 1 || idPerfil_global == 2 || idPerfil_global == 5">Anular</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let item of ordenTrabajoCab |  filter: filtrarMantenimiento  ; index as j" [ngStyle]="item.estado == 0 && {'color': 'red'}">
+                                <td>
+                                    <div class="custom-control custom-checkbox custom-control-inline ">
+                                        <input type="checkbox" [id]="item.id_OT" [(ngModel)]="item.checkeado" class="custom-control-input">
+                                        <label class="custom-control-label" [for]="item.id_OT"> </label>
+                                    </div>
+                                </td>
+                                <td scope="row"> {{j + 1}} </td>
+                                <td>
+                                    <div style="width: 200px; text-align: center;">
+                                        {{item.descripcionEstado}}
+                                    </div>
+                                </td>
+                                <td>{{item.tipoOT}}</td>
+                                <td>
+                                    <div style="width: 100px;">
+                                        {{item.nroObra}}
+                                    </div>
+                                </td>
+                                <td class="text-center">
+                                    <!-- <span class="badge badge-primary puntero" style="padding: 5px;" (click)="abrirModal_OT(item)">  Ver Informe </span> -->
+                                    <img src="./assets/img/ver.png"   tooltip="Ver Informe "  (click)="abrirModal_OT(item)"  >
+                                </td>
+                                <td class="text-center">
+                                    <!-- <span class="badge badge-info puntero" style="padding: 5px;" (click)="abrirModal_adjuntar(item)">  Ver-Adjuntar </span> -->
+                                    <img src="./assets/img/adjuntar.png"   tooltip="Ver-Adjuntar"  (click)="abrirModal_adjuntar(item)"  >
+                                </td>
+                                <td>
+                                    <div style="width: 300px;">
+                                        {{item.direccion}}
+                                    </div>
+                                </td>
+                                <td>
+                                    <div style="width: 200px;">
+                                        {{item.distrito}}
+                                    </div>
+                                </td>
+
+                                <td *ngIf="item.latitud.length ==0 " class="text-center puntero"> </td>
+                                <td *ngIf="item.latitud.length > 0 " class="text-center puntero" (click)="abrirModalMapa(item.latitud, item.longitud )"> <i title="ver mapa" style="color: red;" class="fas fa-map-marker-alt fa-2x">  </i> </td>
+
+                                <td>
+                                    <div style="width: 300px;">
+                                        {{item.empresaContratista}}
+                                    </div>
+                                </td>
+                                <td>
+                                    <div style="width: 200px;">
+                                        {{item.jefeCuadrilla}}
+                                    </div>
+                                </td>
+
+                                <td class="text-right">{{item.generaVolumen | number}}</td>
+                                <td class="text-right">{{item.volumenDesmonte | number}}</td>
+                                <td class="text-right">{{item.volumenDesmonteRecoger | number}}</td>
+                                <td>{{item.desmonteOrigen}}</td>
+                                <td>{{item.jefeCuadrillaOrigen}}</td>
+                                <td>{{item.empresaOrigen}}</td>
+
+                                <td>
+                                    <div style="width: 160px;">
+                                        {{item.fechaHora}}
+                                    </div>
+                                </td>
+                                <td class="text-right">{{item.totalVolumen | number}}</td>
+                                <td class="text-right">{{item.totalDesmonte | number}}</td>
+                                <td class="text-right">{{item.totalDesmonteRecoger | number}}</td>                                
+                                <td>{{item.fechaAprobacion}}</td>
+                                <td class="text-right">{{item.diasVencimiento }}</td>
+                                <td>{{item.prioridad}}</td>
+                                <td class="text-center" *ngIf="idPerfil_global == 1 || idPerfil_global == 2 || idPerfil_global == 5">
+                                    <!-- <span class="badge badge-danger puntero" style="font-size: 11px;" (click)=" anular(item) " title="quitar el registro"> Anular</span> -->
+                                    <img src="./assets/img/anular.png"  tooltip="Anular" (click)="anular(item)"  >
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+            </div>
+        </div>
+
+    </div>
+</div>
+
+
+
+<div class="modal fade " id="modalMapa" data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="myExtraLargeModalLabel  " aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="staticBackdropLabel">Ubicacion Google Maps</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-md-12 modal_body_map">
+                        <div class="location-map" id="location-map">
+                            <div style="width: 600px; height: 400px;" #mapa id="id_mapa"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<div class="modal fade " id="modal_OT" data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="myExtraLargeModalLabel  " aria-hidden="true">
+    <div class="modal-dialog modal-xl modal-dialog-scrollable " role="document">
+        <div class="modal-content">
+            <div class="p-3 card ">
+                <div class="d-flex justify-content-between flotante">
+                    <div class=" bd-highlight">
+                        <i class="fas fa-arrow-circle-left  fa-2x puntero" title="Retornar" (click)="cerrarModal_OT()">  </i>
+                    </div>
+                    <div class=" bd-highlight">
+                        <h5 class="headerTitleModal"> {{tituloModal}} </h5>
+                    </div>
+                    <div class=" bd-highlight">
+                        <i class="far fa-times-circle fa-2x puntero" title="Retornar" (click)="cerrarModal_OT()">  </i>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-body">
+
+                <div class="row p-3 " style=" margin-top: -15px;">
+                    <div class="col-md-3">
+                        <label> Nro Orden</label>
+                        <input type="text" class="form-control " style="background-color: beige; color:red; font-weight: 600;" maxlength="30" [(ngModel)]="nroObraParteDiario_Global" (keyup.enter)="modificarNroOrden()">
+                    </div>
+                    <div class="col-md-3">
+                        <label> Fecha y Hora de Registro</label>
+                        <input type="text" class="form-control disabledForm" [(ngModel)]="fechaHora_Global">
+                    </div>
+                    <div class="col-md-3" *ngIf="id_tipoOTGlobal == 5">
+                        <label> Trabajo Origen</label>
+                        <input type="text" class="form-control disabledForm" [(ngModel)]="tipoTrabajo_OTOrigenGlobal">
+                    </div>
+
+                </div>
+
+                <div class="row">
+                    <div class="col-12">
+                        <ul class="nav nav-pills mb-3" id="pills-tab" role="tablist" style="background-color: #002f77;">
+
+                            <li class="nav-item TabControl">
+                                <a class="nav-link active" style="color:white !important" (click)="selectedTabControlDetalle = 'DATOS GENERALES' " data-toggle="pill" [class.active]="selectedTabControlDetalle==='DATOS GENERALES'" role="tab" aria-controls="pills-home" aria-selected="true">DATOS GENERALES</a>
+                            </li>
+                            <li class="nav-item TabControl" *ngIf="flagMedidas">
+                                <a class="nav-link active" style="color:white !important" (click)="selectedTabControlDetalle = 'MEDIDAS' " data-toggle="pill" [class.active]="selectedTabControlDetalle==='MEDIDAS'" role="tab" aria-controls="pills-home" aria-selected="true">MEDIDAS</a>
+                            </li>
+                            <li class="nav-item TabControl">
+                                <a class="nav-link active" style="color:white !important" (click)="selectedTabControlDetalle = 'DESMONTE' " data-toggle="pill" [class.active]="selectedTabControlDetalle==='DESMONTE'" role="tab" aria-controls="pills-home" aria-selected="true">DESMONTE</a>
+                            </li>
+                            <li class="nav-item TabControl">
+                                <a class="nav-link active" style="color:white !important" (click)="selectedTabControlDetalle = 'COMENTARIOS' " data-toggle="pill" [class.active]="selectedTabControlDetalle==='COMENTARIOS'" role="tab" aria-controls="pills-home" aria-selected="true"> COMENTARIOS</a>
+                            </li>
+                        </ul>
+
+                        <div class="containerDetalle">
+                            <div class="tab-content" id="pills-tabContent">
+
+                                <!-- Datos Generales -->
+                                <div *ngIf="selectedTabControlDetalle === tabControlDetalle[0]" role="tabpanel" class="tab-pane active">
+
+                                    <div class="card border-primary	">
+                                        <div class="card-body ">
+
+                                            <form [formGroup]="formParamsDatosG" style=" margin-top: -15px;">
+                                                <div class="row">
+                                                    <div class="col-md-12">
+                                                        <label> Direccion</label>
+                                                        <input type="text" class="form-control  disabledForm" maxlength="200" formControlName="direccion">
+                                                    </div>
+                                                </div>
+
+                                                <div class="row">
+                                                    <div class="col-md-12">
+                                                        <label> Distrito</label>
+                                                        <select class="form-control comboBox  disabledForm" formControlName="idDistrito">
+                                                            <option value="0"> [ -- SELECCIONE -- ]</option>
+                                                            <option [value]="dist.id_Distrito" *ngFor="let dist of distritos">{{dist.nombreDistrito}}</option>
+                                                        </select>
+                                                    </div>
+                                                </div>
+
+                                                <div class="row">
+                                                    <div class="col-md-12">
+                                                        <label> Referencia</label>
+                                                        <input type="text" class="form-control disabledForm " maxlength="200" formControlName="referencia">
+                                                    </div>
+                                                </div>
+
+                                                <div class="row">
+                                                    <div class="col-md-12">
+                                                        <label> Descripcion del Trabajo</label>
+                                                        <input type="text" class="form-control disabledForm" maxlength="200" formControlName="descripcionTrabajo">
+                                                    </div>
+                                                </div>
+
+                                                <div class="row">
+                                                    <div class="col-md-12">
+                                                        <label> Estado</label>
+                                                        <select class="form-control comboBox " formControlName="idEstado">
+                                                            <option value="0"> [ -- SELECCIONE -- ]</option>
+                                                            <option [value]="estado.id_Estado" *ngFor="let estado of estados">{{estado.descripcion_estado}}</option>
+                                                         </select>
+                                                    </div>
+                                                </div>
+
+
+                                                <div class="row" *ngIf=" formParamsDatosG.value.idEstado == 10 ">
+                                                    <div class="col-md-12">
+                                                        <label> Observacion</label>
+                                                        <input type="text" class="form-control " maxlength="200" formControlName="observacion">
+                                                    </div>
+                                                </div>
+
+                                            </form>
+
+                                            <br>
+                                            <div class="row" *ngIf="id_estadoOTGlobal != 6 ? false: true ">
+                                                <div class="col-md-12 text-center">
+                                                    <button class="btn  btn-sm  btn-primary" (click)="Aprobar_OT()" title="Aprobar la Orden de Trabajo">
+                                                        <i class="fas fa-save"> Aprobar OT</i> 
+                                                    </button>
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                    </div>
+
+                                </div>
+
+                                <!-- Medidas -->
+                                <div *ngIf="selectedTabControlDetalle === tabControlDetalle[1] " role="tabpanel" class="tab-pane active">
+
+                                    <div class="card border-primary ">
+                                        <div class="card-body ">
+
+                                            <div class=" table-responsive" *ngIf="id_OTGlobal > 0">
+                                                <table class="table table-hover table-sm">
+                                                    <thead class="theadTable thead-dark">
+                                                        <tr>
+                                                            <th scope="col">#</th>
+                                                            <th scope="col" class="text-center">Tipo Material</th>
+                                                            <th scope="col" class="text-center">Largo</th>
+                                                            <th scope="col" class="text-center">Ancho</th>
+                                                            <th scope="col" class="text-center">Altura</th>
+                                                            <th scope="col" class="text-center">Total</th>
+                                                            <th colspan="3" class="text-center">Acciones</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        <tr *ngFor="let item of medidasDetalle; index as i">
+                                                            <th scope="row"> {{i + 1}} </th>
+                                                            <td>{{item.tipoMaterial}}</td>
+                                                            <td class="text-right">{{item.largo | number }}</td>
+                                                            <td class="text-right">{{item.ancho | number }}</td>
+                                                            <td class="text-right">{{item.espesor | number}}</td>
+                                                            <td class="text-right">{{item.total | number }}</td>
+                                                            <td class="text-center">                            
+                                                                <img src="./assets/img/galeria2.png"   tooltip="Ver Fotos " (click)="abrirModal_visorFotos(item)"  >
+                                                            </td>
+                                                            <td class="text-center">                                                               
+                                                                <img src="./assets/img/editar.png"  *ngIf="idPerfil_global == 2 "  tooltip="Editar" (click)="abrirModal_editar(item, 'M')"  >
+                                                            </td>
+                                                            <td class="text-center">                                                                
+                                                                <img src="./assets/img/anular.png" *ngIf="idPerfil_global == 2 " tooltip="Eliminar" (click)="eliminarMedidas(item, 'M' )"  >
+                                                            </td>
+                                                        </tr>
+                                                    </tbody>
+                                                    <tfoot>
+                                                        <tr>
+                                                            <td colspan="4"></td>
+                                                            <td style="font-size: 12px; font-weight: 600;" class="text-right">Total:</td>
+                                                            <td scope="col" style=" font-size: 12px; font-weight: 800;" class="text-right" style="color:yellowgreen">{{totalGlobal | number }}</td>
+                                                            <td scope="col"></td>
+                                                            <td scope="col"></td>
+                                                            <td scope="col"></td>
+                                                        </tr>
+                                                    </tfoot>
+                                                </table>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </div>
+
+                                <!-- Desmonte -->
+                                <div *ngIf="selectedTabControlDetalle === tabControlDetalle[2]" role="tabpanel" class="tab-pane active">
+
+                                    <div class="card border-primary ">
+                                        <div class="card-body ">
+
+                                            <div class=" table-responsive" *ngIf="id_OTGlobal > 0">
+                                                <table class="table table-hover table-sm">
+                                                    <thead class="theadTable thead-dark">
+                                                        <tr>
+                                                            <th scope="col">#</th>
+                                                            <th scope="col" class="text-center">Tipo </th>
+                                                            <th scope="col" class="text-center">Largo</th>
+                                                            <th scope="col" class="text-center">Ancho</th>
+                                                            <th scope="col" class="text-center">Altura</th>
+                                                            <th scope="col" class="text-center">Total</th>
+                                                            <th colspan="3" class="text-center">Acciones</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        <tr *ngFor="let item of desmonteDetalle; index as i">
+                                                            <th scope="row"> {{i + 1}} </th>
+                                                            <td>{{item.tipoMaterial}}</td>
+                                                            <td class="text-right">{{item.largo | number }}</td>
+                                                            <td class="text-right">{{item.ancho | number }}</td>
+                                                            <td class="text-right">{{item.espesor | number}}</td>
+                                                            <td class="text-right">{{item.total | number }}</td>
+                                                            <td class="text-center">                            
+                                                                <img src="./assets/img/galeria2.png"   tooltip="Ver Fotos " (click)="abrirModal_visorFotos(item)"  >
+                                                            </td>
+                                                            <td class="text-center">                                                               
+                                                                <img src="./assets/img/editar.png"  *ngIf="idPerfil_global == 2 "  tooltip="Editar" (click)="abrirModal_editar(item, 'D')"  >
+                                                            </td>
+                                                            <td class="text-center">                                                                
+                                                                <img src="./assets/img/anular.png" *ngIf="idPerfil_global == 2 " tooltip="Eliminar" (click)="eliminarDesmonte(item, 'D' )"  >
+                                                            </td>
+
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+                                            </div>
+
+                                            <div class="d-flex justify-content-end">
+                                                <div class="p-2 bd-highlight"></div>
+                                                <div class="p-2 bd-highlight">
+                                                    <label> Importe Total en Recojo de Desmonte :</label>
+                                                </div>
+                                                <div class="p-2 bd-highlight">
+                                                    <b style="color: yellowgreen;">   {{totalGlobal14 | number }} </b>
+                                                </div>
+                                            </div>
+
+                                            <div class="d-flex justify-content-end">
+                                                <div class="p-2 bd-highlight"></div>
+                                                <div class="p-2 bd-highlight">
+                                                    <label> Importe Total Pendiente de Recojo de Desmonte :</label>
+                                                </div>
+                                                <div class="p-2 bd-highlight">
+                                                    <b style="color: orange;">   {{totalGlobal15 | number }} </b>
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                    </div>
+
+                                </div>
+
+                                <!-- Comentarios -->
+                                <div *ngIf="selectedTabControlDetalle === tabControlDetalle[3]" role="tabpanel" class="tab-pane active">
+
+                                    <div class="card border-primary	">
+                                        <div class="card-body ">
+
+                                            <form [formGroup]="formParamsObservacion" style=" margin-top: -15px;">
+                                                <div class="row">
+                                                    <div class="col-md-12">
+                                                        <label> Observaciones del Gestor </label>
+                                                        <input type="text" class="form-control " maxlength="200" formControlName="observarcionGestor">
+                                                    </div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col-md-12">
+                                                        <label> Estatus</label>
+                                                        <input type="text" class="form-control " maxlength="200" formControlName="estatus">
+                                                    </div>
+                                                </div>
+                                            </form>
+
+                                            
+                                            <br>
+                                            <div class="row"  >
+                                                <div class="col-md-12 text-center">
+                                                    <button class="btn  btn-sm  btn-primary" (click)="guardarObservaciones()" title="Grabar">
+                                                        <i class="fas fa-save"> </i>  Grabar
+                                                    </button>
+                                                </div>
+                                            </div>
+ 
+
+                                        </div>
+                                    </div>
+
+                                </div>
+
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" (click)="cerrarModal_OT()">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<div class="modal fade " id="modal_visorFotos" data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="myExtraLargeModalLabel  " aria-hidden="true">
+    <div class="modal-dialog modal-lg   modal-dialog-scrollable " role="document">
+        <div class="modal-content">
+            <div class="p-3 card " style="background-color: #002f77;">
+                <div class="d-flex justify-content-between flotante">
+                    <div class=" bd-highlight">
+                        <i class="fas fa-arrow-circle-left  fa-2x puntero" style="color: gray !important" title="Retornar" (click)="cerrarModal_visor()">  </i>
+                    </div>
+                    <div class=" bd-highlight">
+                        <h5 style="color: white;"> Visor de Fotos </h5>
+                    </div>
+                    <div class=" bd-highlight">
+                        <i class="far fa-times-circle fa-2x puntero" style="color: gray !important" title="Retornar" (click)="cerrarModal_visor()">  </i>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-body">
+ 
+
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="row" *ngIf="this.detalleOT">
+                            <div class="col-xs-6 col-md-3">
+                                <label> 
+                                    {{ (this.id_tipoOTGlobal == 3 || this.id_tipoOTGlobal == 4 )? 'TIPO MATERIAL :  ' : 'TIPO DESMONTE : '  }} {{this.detalleOT.tipoMaterial}}
+                                </label>
+                            </div>
+                            <div class="col-xs-6 col-md-3">
+                                <label for=""> Cant Paños :  {{this.detalleOT.cantPanios}} </label>
+                            </div>
+                            <div class="col-xs-6 col-md-3">
+                                <label for=""> Med. Horizontal :  {{this.detalleOT.medHorizontal}}  </label>
+                            </div>
+                            <div class="col-xs-6 col-md-3">
+                                <label for="">  Med. Vertical :  {{this.detalleOT.medVertical}}  </label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row" *ngIf="this.detalleOT">
+                    <div class=" col-md-3 col-6">
+                        <label for=""> Largo : {{this.detalleOT.largo}} </label>
+                    </div>
+                    <div class="col-md-3 col-6">
+                        <label for=""> Ancho :  {{this.detalleOT.ancho}} </label>
+                    </div>
+                    <div class="col-xs-6 col-md-3">
+                        <label for=""> Altura :  {{this.detalleOT.espesor}}  </label>
+                    </div>
+                    <div class="col-xs-6 col-md-3">
+                        <label for=""> Total :  {{this.detalleOT.total}}  </label>
+                    </div>
+                </div>
+
+
+                <br>
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="card-columns animated fadeIn">
+                            <div class="card shadow  border-cards " *ngFor="let foto of fotosDetalle ">
+                                <a class="puntero" (click)="open_modalAgrandarFoto(foto)">
+                                    <img [src]="foto.urlFoto" class="card-img-top img_anuncio" alt="...">
+                                </a>
+                                <div class="card-body ">
+                                    <div class="text-center ">
+                                        <label class="card-text ">  {{foto.nombreFoto}}</label>
+                                    </div>
+                                    <br>
+                                    <div class="text-center " style="margin-top: -15px !important; margin-bottom: -5px;" *ngIf="id_estadoOTGlobal != 6 ? false: true ">
+                                        <button type="button" class="btn btn-block btn-outline-danger" (click)="anulandoFoto(foto)"> Anular</button>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" (click)="cerrarModal_visor()">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<div class="modal" id="modal_agrandarFoto" tabindex="-1">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content" style="border: 3px solid #ffc107;">
+
+
+            <div class="p-3 card ">
+                <div class="d-flex justify-content-between flotante">
+                    <div class=" bd-highlight">
+
+                    </div>
+                    <div class=" bd-highlight">
+
+                    </div>
+                    <div class=" bd-highlight">
+                        <i class="far fa-times-circle fa-2x puntero" style="color:black !important" title="Retornar" (click)="cerrarModal_agrandarFoto()">  </i>
+                    </div>
+                </div>
+            </div>
+
+            <div class="modal-body">
+
+                <!-- <button type="button" class="btn btn-block btn-outline-danger" (click)="anulandoFoto(objFotoAgrandar)"> Anular</button> -->
+
+                <div class="card bg-dark text-white">
+                    <img [src]="urlFotoAgrandar" style="max-height: 600px;" class="card-img-top" alt="...">
+                    <div class="card-img-overlay">
+
+                    </div>
+                </div>
+
+
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<div class="modal" id="modal_edicion" tabindex="-1">
+    <div class="modal-dialog ">
+        <div class="modal-content" style="border: 3px solid #ffc107;">
+            <div class="p-3 card ">
+                <div class="d-flex justify-content-between flotante">
+                    <div class=" bd-highlight">
+
+                    </div>
+                    <div class=" bd-highlight">
+                        <h1> MODIFICAR </h1>
+                    </div>
+                    <div class=" bd-highlight">
+                        <i class="far fa-times-circle fa-2x puntero" style="color:black !important" title="Retornar" (click)="cerrarModal_editar()">  </i>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-body">
+
+                <form [formGroup]="formParamsDet">
+
+                    <div class="row">
+                        <div class="col-6">
+                            <label for=""> Largo</label>
+                            <input type="number" #_cant class="form-control text-right" (input)="onBlurMethod($event)" formControlName="largo">
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-6">
+                            <label for=""> Ancho</label>
+                            <input type="number" #_cant class="form-control text-right" (input)="onBlurMethod($event)" formControlName="ancho">
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-6">
+                            <label for=""> Altura</label>
+                            <input type="number" #_cant class="form-control text-right" (input)="onBlurMethod($event)" formControlName="altura">
+                        </div>
+                    </div>
+
+
+                    <div class="row">
+                        <div class="col-8">
+                            <label for=""> Total</label>
+                            <input type="number" #_cant class="form-control text-right disabledForm" formControlName="total">
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="text-center mt-3">
+                                <button class="btn btn-sm btn-success" (click)="set_actualizandoDetalleOt()">  <i class="fas fa-save"> Grabar</i> </button>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+
+
+            </div>
+        </div>
+    </div>
+</div>
+
+ 
+<div class="modal" id="modal_adjuntar" tabindex="-1">
+    <div class="modal-dialog ">
+        <div class="modal-content" style="border: 3px solid #07f7ff;">
+            <div class="p-3 card ">
+                <div class="d-flex justify-content-between flotante">
+                    <div class=" bd-highlight">
+
+                    </div>
+                    <div class=" bd-highlight">
+                        <h4>  ADJUNTAR ARCHIVO </h4>
+                    </div>
+                    <div class=" bd-highlight">
+                        <i class="far fa-times-circle fa-2x puntero" style="color:black !important" title="Retornar" (click)="cerrarModal_adjuntar()">  </i>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-body">
+
+                <form [formGroup]="formParamsFile">                    
+                    <div class="row">
+                        <div class="col-md-12">
+                             <label for=""> {{labelAdjuntar}} </label>
+                            <div class="botonFile">
+                                <input type="file" class="form-control-file btn" style="height: 40px  !important ; " formControlName="file" accept="application/pdf,image/x-png,image/gif,image/jpeg"  (change)="onFileChange($event)" />
+                            </div>
+                        </div>
+                    </div>
+                </form>
+
+                <div class="row">
+                    <div class="col-md-12">
+                        <div *ngFor="let fil of files; let i=index">
+                            <div class="alert alert-danger text-center" *ngIf="fil.status === 'error'">
+                                <h5>Sistemas</h5>
+                                <hr>
+                                <p><small>{{fil.message}}</small></p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                
+                <div class="row">
+                    <div class="col-md-12 text-center">
+                        <button class="btn btn-success" (click)="upload_adjuntar()" title="Guardar la informacion"> <i class="fas fa-save">  {{ (labelAdjuntar == 'Adjuntar Archivo') ? 'Cargar' : 'Actualizar'  }} </i></button>
+                    </div>
+                </div>
+
+                <hr>
+
+                <div class="row" *ngIf="nombreArchivoAdjuntar">   
+                    <div class="col-md-12">
+                       <label for=""  > Nombre de Archivo cargado :</label>  
+                       <div class="text-center">
+                        <p class="labelTextFile"> {{nombreArchivoAdjuntar}}  </p> 
+                        <i class="fas fa-arrow-alt-circle-down puntero" title="Descargar Archivo Cargado" style="color: red; font-size: 40px;" (click)="verArchivo()"> </i>
+ 
+                       </div>
+                    </div>
+                </div>
+
+
+            </div>
+        </div>
+    </div>
+</div>

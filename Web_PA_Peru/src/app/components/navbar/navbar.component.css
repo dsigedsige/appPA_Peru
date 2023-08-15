@@ -1,0 +1,68 @@
+ 
+ 
+.bg-primary {
+    background-color: #002f77!important;
+} 
+ 
+li {
+    /* padding: 1rem 2rem 1.15rem; */
+    text-transform: uppercase;
+    cursor: pointer;
+    color: #ebebeb;
+    min-width: 50px;
+    margin: auto;
+}
+
+li,a:hover {
+    background-size: 100% 100%;
+    color: #27262c;
+    animation: spring 10ms ease-in; 
+    text-shadow: 0 -1px 0 #002f77!important;
+    font-weight: bold;
+  }
+
+li:hover {
+  background-size: 100% 100%;
+  text-decoration: revert;
+  color: #27262c;
+  animation: spring 200ms ease-out;
+  text-shadow: 0 -1px 0 red;
+	font-weight: bold;
+}
+
+li:active {
+  transform: translateY(4px);
+}
+
+@keyframes spring {
+  15% {
+    -webkit-transform-origin: center center;
+    -webkit-transform: scale(1.2, 1.1);
+  }
+  40% {
+    -webkit-transform-origin: center center;
+    -webkit-transform: scale(0.95, 0.95);
+  }
+  75% {
+    -webkit-transform-origin: center center;
+    -webkit-transform: scale(1.05, 1);
+  }
+  100% {
+    -webkit-transform-origin: center center;
+    -webkit-transform: scale(1, 1);
+  }
+}
+
+.shameless-plug{
+  position: absolute;
+  bottom: 10px;
+  right: 0;
+  padding: 8px 20px;
+  color: #ccc;
+  text-decoration: none;
+}
+
+.dropdown-item {
+    font-size: 13px;
+    font-family: 'Montserrat', sans-serif !important;
+}

@@ -1,0 +1,98 @@
+<div class="card border-left-warning  shadow   mt-3">
+    <div class="card-header">
+        <h5 class="headerTitle"> REPORTE ANALISIS </h5>
+    </div>
+    <div class="card-body">
+        <form [formGroup]="formParamsFiltro">
+
+            <div class="row" style=" margin-top: -15px;">
+                <div class="col-md-2">
+                    <label for=""> Servicio</label>
+                    <select class="form-control comboBox" formControlName="idServicio">
+                        <option value="0"> [ --TODOS-- ]</option>
+                        <option [value]="tipo.id_servicio" *ngFor="let tipo of servicios">{{tipo.nombreServicio}}</option>
+                    </select>
+                </div>
+                <div class="col-md-2">
+                    <label for=""> Tipo OT</label>
+                    <select class="form-control comboBox" formControlName="idTipoOT">
+                        <option value="0"> [ --SELECCIONE-- ]</option>
+                        <option [value]="tipo.id_detalleTabla" *ngFor="let tipo of tipoOrdenTrabajo">{{tipo.descripcion_grupoTabla}}</option>
+                    </select>
+                </div>
+                <div class="col-md-2">
+                    <label for=""> Sub Contrata</label>
+                    <select class="form-control comboBox" formControlName="idProveedor">
+                        <option value="0"> [ --TODOS-- ]</option>
+                        <option [value]="item.id_Empresa" *ngFor="let item of proveedor">{{item.razonSocial_Empresa}}</option>
+                    </select>
+                </div>
+                <div class="col-md-2">
+                    <label class="control-label"> Rango Fechas </label>
+                    <div class="input-group">
+                        <input class="form-control" #datepickerYMD="bsDatepicker" bsDatepicker formControlName="fecha_ini" [bsConfig]="{ dateInputFormat: 'DD/MM/YYYY' , containerClass: 'theme-dark-blue'}">
+                        <span class="input-group-addon">-</span>
+                        <input class="form-control" #datepickerYMD="bsDatepicker" bsDatepicker formControlName="fecha_fin" [bsConfig]="{ dateInputFormat: 'DD/MM/YYYY', containerClass: 'theme-dark-blue'}">
+                    </div>
+                </div>
+                <div class="col-md-2 ">
+                    <label for=""> Estado</label>
+                    <select class="form-control comboBox" formControlName="idEstado">
+                        <option value="0"> [ --TODOS-- ]</option>
+                        <option [value]="estado.id_Estado" *ngFor="let estado of estados">{{estado.descripcion_estado}}</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-2"> </div>
+                <div class="col-md-8 text-center ">
+                    <br>
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="radio" id="inlineRadio1" formControlName="tipoReporte" name="tipoReporte" value="1" (change)="changeDetallado($event.target.value)">
+                        <label class="form-check-label" style="font-size: 11px;" for="inlineRadio1"> ROTURA DE VEREDA </label>
+                    </div>
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="radio" id="inlineRadio2" formControlName="tipoReporte" name="tipoReporte" value="2" (change)="changeDetallado($event.target.value)">
+                        <label class="form-check-label" style="font-size: 11px;" for="inlineRadio2">  CONTRATA REPARACION DE VEREDA </label>
+                    </div>
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="radio" id="inlineRadio3" formControlName="tipoReporte" name="tipoReporte" value="3" (change)="changeDetallado($event.target.value)">
+                        <label class="form-check-label" style="font-size: 11px;" for="inlineRadio3">  CONTRATA REPARACION DE DESMONTE  </label>
+                    </div>
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="radio" id="inlineRadio4" formControlName="tipoReporte" name="tipoReporte" value="4" (change)="changeDetallado($event.target.value)">
+                        <label class="form-check-label" style="font-size: 11px;" for="inlineRadio4">  DETALLADO  </label>
+                    </div>
+                </div>
+                <div class="col-md-2"> </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="d-flex justify-content-center">
+                        <div class="p-2 mt-4">
+                            <button class="btn  btn-sm  btn-primary" (click)="mostrarInformacion_reporte()" title="Mostar la informacion">
+                                <i class="fas fa-file-download"> Descargar</i> 
+                        </button>
+                        </div>
+                        <div class="p-2 listaRadios mt-3" *ngIf="showReporteDetallado">
+                            <div class="form-check">
+                                <input class="form-check-input" id="inlineRadio6" type="radio" formControlName="tipoReporte" value="6">
+                                <label class="form-check-label" for="inlineRadio6">  Descargar con Filtros   </label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input" id="inlineRadio7" type="radio" formControlName="tipoReporte" value="7">
+                                <label class="form-check-label" for="inlineRadio7">  Descargar Data General    </label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </form>
+
+
+
+    </div>
+</div>
