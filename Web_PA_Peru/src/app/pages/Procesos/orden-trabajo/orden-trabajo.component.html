@@ -41,7 +41,7 @@
 
                 <div class="col-md-3 ">
                     <label for=""> Estado</label>
-                    <select class="form-control comboBox" formControlName="idEstado"> 
+                    <select class="form-control comboBox" formControlName="idEstado">
                         <option value="0"> [ --SELECCIONE-- ]</option>
                         <option [value]="estado.id_Estado" *ngFor="let estado of estados">{{estado.descripcion_estado}}</option>
                     </select>
@@ -216,7 +216,7 @@
                                     <div id="content_leyenda" style="display:none">
                                         <h3></h3>
                                     </div> -->
-                                    <!-- 
+                                    <!--
                                     <div>
                                         <button type="button" class="btn btn-primary" (click)="" >Primary</button>
                                     </div> -->
@@ -740,7 +740,7 @@
                                             <!-- <div class="row" *ngIf="id_estadoOTGlobal != 6 ? false: true ">
                                                 <div class="col-md-12 text-center">
                                                     <button class="btn  btn-sm  btn-primary" (click)="Aprobar_OT()" title="Aprobar la Orden de Trabajo">
-                                                        <i class="fas fa-save"> Aprobar OT</i> 
+                                                        <i class="fas fa-save"> Aprobar OT</i>
                                                     </button>
                                                 </div>
                                             </div> -->
@@ -759,7 +759,7 @@
                                             <div class="row">
                                                 <div class="col-md-12 text-right">
                                                     <!-- <button style="margin-top: -22px !important; font-size: 11px;" class="btn  btn-sm  btn-warning " (click)="descargarFotosOT('P')" title="Descargar">
-                                                            <i class="fas fa-file-download"> Descargar</i> 
+                                                            <i class="fas fa-file-download"> Descargar</i>
                                                     </button> -->
                                                     <img src="./assets/img/descargar.png"   tooltip="Descargar Fotos " (click)="descargarFotosOT('P')"  >
                                                 </div>
@@ -786,7 +786,7 @@
                                                             <td class="text-right">{{item.ancho | number }}</td>
                                                             <td class="text-right">{{item.espesor | number}}</td>
                                                             <td class="text-right">{{item.total | number }}</td>
-                                                            <td class="text-center"> 
+                                                            <td class="text-center">
                                                                 <img src="./assets/img/galeria2.png"   tooltip="Ver Fotos " (click)="abrirModal_visorFotos(item)"  >
                                                             </td>
                                                         </tr>
@@ -833,7 +833,7 @@
                                                             <td class="text-right">{{item.ancho | number }}</td>
                                                             <td class="text-right">{{item.espesor | number}}</td>
                                                             <td class="text-right">{{item.total | number }}</td>
-                                                            <td class="text-center">                                                        
+                                                            <td class="text-center">
                                                                 <img src="./assets/img/galeria2.png"   tooltip="Ver Fotos " (click)="abrirModal_visorFotos(item)"  >
                                                             </td>
                                                         </tr>
@@ -902,7 +902,7 @@
                     <div class="col-md-9">
                         <div class="row" *ngIf="this.detalleOT">
                             <div class="col-xs-6 col-md-3">
-                                <label> 
+                                <label>
                                     {{ (this.id_tipoOTGlobal == 3 || this.id_tipoOTGlobal == 4 )? 'TIPO MATERIAL :  ' : 'TIPO DESMONTE : '  }} {{this.detalleOT.tipoMaterial}}
                                 </label>
                             </div>
@@ -919,7 +919,7 @@
                     </div>
                     <div class="col-md-3">
                         <!-- <button style="margin-top: -5px !important; font-size: 11px;" class="btn  btn-sm  btn-warning " (click)="descargarFotosOT_visor('V')" title="Descargar">
-                            <i class="fas fa-file-download"> Descargar</i> 
+                            <i class="fas fa-file-download"> Descargar</i>
                         </button> -->
                         <img src="./assets/img/descargar.png"   tooltip="Descargar Fotos " (click)="descargarFotosOT_visor('V')"  >
                     </div>

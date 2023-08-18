@@ -1,0 +1,161 @@
+
+<div class="card border-left-warning  shadow   ">
+  <div class="card-header">
+      <h5 class="headerTitle"> Lista de Ordenes / LCL </h5>
+  </div>
+  <div class="card-body">
+    <form [formGroup]="formParamsFiltro">
+      <div class="row" style=" margin-top: -15px;">
+        <div class="col-md-3">
+          <label for=""> Servicio</label>
+          <select (change)="getComboCuadrilla()" class="form-control comboBox" formControlName="idServicio">
+              <option value="0"> [ --TODOS-- ]</option>
+              <option [value]="item.Ges_Proy_Codigo" *ngFor="let item of area">{{item.ges_proy_descripcion}}</option>
+          </select>
+        </div>
+        <div class="col-md-3">
+          <label for=""> CUADRILLA</label>
+          <select class="form-control comboBox" formControlName="idCuadrilla">
+              <option value="0"> [ --TODOS-- ]</option>
+              <option [value]="item.Ges_Cuad_Codigo" *ngFor="let item of cuadrilla">{{item.Ges_Cuad_Descripcion}}</option>
+          </select>
+        </div>
+        <div class="col-md-2">
+          <label class="control-label"> Rango Fechas </label>
+          <div class="input-group">
+              <input class="form-control" #datepickerYMD="bsDatepicker" bsDatepicker formControlName="fecha_ini" [bsConfig]="{ dateInputFormat: 'DD/MM/YYYY', containerClass: 'theme-dark-blue'  }">
+              <span class="input-group-addon">-</span>
+              <input class="form-control" #datepickerYMD="bsDatepicker" bsDatepicker formControlName="fecha_fin" [bsConfig]="{ dateInputFormat: 'DD/MM/YYYY',containerClass: 'theme-dark-blue' }">
+          </div>
+        </div>
+        <div class="col-md-3 ">
+          <label for=""> Estado</label>
+          <select class="form-control comboBox" formControlName="idEstado">
+              <option value="0"> [ --SELECCIONE-- ]</option>
+              <option [value]="item.Pub_Esta_Codigo" *ngFor="let item of estado">{{item.Pub_Esta_Nombre}}</option>
+          </select>
+        </div>
+        <div class="col-md-1.5">
+          <div class="mt-4">
+              <button class="btn btn-primary  btn-block"  style="font-size: 13px;">  <i class="fas fa-search" (click)="listarObras()"> Actualizar</i> </button>
+          </div>
+        </div>
+      </div>
+
+      <div class="row" style=" margin-top: 0px;">
+        <div class="col-md-9">
+          <div class="d-flex justify-content-between" style=" margin-top: -0px;">
+            <div class="p-2 bd-highlight"> </div>
+            <div class="p-2 bd-highlight" style="width: 80%;">
+                <input type="text" class="form-control form-control-sm " placeholder="Auto Busquedas" maxlength="50">
+            </div>
+            <div class="p-2 bd-highlight"> </div>
+          </div>
+        </div>
+        <div class="col-md-1.5">
+          <div class="mt-1">
+              <button class="btn btn-warning  btn-block"  style="font-size: 13px;">  <i class="fas fa-download"> Exportar</i> </button>
+          </div>
+        </div>
+      </div>
+    </form>
+    <div class="search-results tableFixHead">
+      <table class="table  table-hover table-sm">
+          <thead class="theadTable">
+              <tr style="height: 40px !important;">
+                  <th scope="col">#</th>
+                  <th scope="col">NRO OBRA_TD</th>
+                  <th scope="col">Foto</th>
+                  <th scope="col">INFORME</th>
+                  <th scope="col">Descripcion</th>
+                  <th scope="col">Direccion</th>
+                  <th scope="col">Estado</th>
+              </tr>
+          </thead>
+          <tbody>
+              <tr *ngFor="let item of listObras; index as i">
+                <td>{{i+1}}</td>
+                <td>{{item.Ges_Obra_Codigo}}</td>
+                <td>
+                  <img src="./assets/img/galeria2.png"   tooltip="Ver Fotos" (click)="abrirModal_visorFotos(item)">
+                </td>
+                <td>{{item.Servicio}}</td>
+                <td>{{item.Ges_Obra_Descripcion}}</td>
+                <td>{{item.Ges_Obra_Direccion}}</td>
+                <td>{{item.estado}}</td>
+              </tr>
+          </tbody>
+      </table>
+  </div>
+  </div>
+</div>
+
+
+
+
+
+<div class="modal fade " id="modal_visorFotos" data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="myExtraLargeModalLabel  " aria-hidden="true">
+  <div class="modal-dialog modal-lg   modal-dialog-scrollable " role="document">
+      <div class="modal-content">
+          <div class="p-3 card " style="background-color: #002f77;">
+              <div class="d-flex justify-content-between flotante">
+                  <div class=" bd-highlight">
+                      <i class="fas fa-arrow-circle-left  fa-2x puntero" style="color: gray !important" title="Retornar" (click)="cerrarModal_visor()">  </i>
+                  </div>
+                  <div class=" bd-highlight">
+                      <h5 style="color: white;"> Visor de Fotos </h5>
+                  </div>
+                  <div class=" bd-highlight">
+                      <i class="far fa-times-circle fa-2x puntero" style="color: gray !important" title="Retornar" (click)="cerrarModal_visor()">  </i>
+                  </div>
+              </div>
+          </div>
+          <div class="modal-body">
+              <div class="row">
+                <div class="col-md-12">
+                    <div class="card-columns animated fadeIn">
+                        <div class="card shadow  border-cards " *ngFor="let foto of fotosDetalle ">
+                            <!-- <a class="puntero" (click)="open_modalAgrandarFoto(foto)">
+                                <img [src]="foto.urlFoto" class="card-img-top img_anuncio" alt="...">
+                            </a> -->
+                            <img [src]="foto.Rutafoto" class="card-img-top img_anuncio" alt="...">
+                            <div class="card-body ">
+                                <div class="text-center ">
+                                    <label class="card-text ">  {{foto.NombreFoto}}</label>
+                                </div>
+                                <br>
+                                <div class="text-center " style="margin-top: -15px !important; margin-bottom: -5px;">
+                                    <button type="button" class="btn btn-block btn-outline-danger" (click)="anulandoFoto(foto)"> Anular</button>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+              </div>
+
+              <form [formGroup]="formParamsFile">
+                <div class="row">
+                    <div class="col-md-12">
+                         <label for="">Subir Archivos </label>
+                        <div class="botonFile">
+                            <input type="file" class="form-control-file btn" style="height: 40px  !important ; " formControlName="file" accept="application/pdf,image/x-png,image/gif,image/jpeg"  (change)="onFileChange($event)" />
+                        </div>
+                    </div>
+                </div>
+            </form>
+
+
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" (click)="descargarFotosObras('P')">Descargar Archivos</button>
+              <button type="button" class="btn btn-secondary" (click)="cerrarModal_visor()">Close</button>
+          </div>
+      </div>
+  </div>
+</div>
+
+
+
+
+

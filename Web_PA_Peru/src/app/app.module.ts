@@ -27,7 +27,7 @@ import * as locales from 'ngx-bootstrap/locale';
 import { defineLocale } from 'ngx-bootstrap/chronos';
 
 // socket
-import { SocketIoModule, SocketIoConfig } from 'ngx-socket-io'; 
+import { SocketIoModule, SocketIoConfig } from 'ngx-socket-io';
 
 import { AppComponent } from './app.component';
 import { HomeComponent } from './pages/home/home.component';
@@ -35,7 +35,7 @@ import { NavbarComponent } from './components/navbar/navbar.component';
 import { SpinnerloadingComponent } from './components/spinnerloading/spinnerloading.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { BsDatepickerModule, BsLocaleService, BsDatepickerConfig } from 'ngx-bootstrap/datepicker';
- 
+
 import { LightboxModule } from 'ngx-lightbox';
 import { ProveedorComponent } from './pages/Mantenimientos/proveedor/proveedor.component';
 import { PersonalComponent } from './pages/Mantenimientos/personal/personal.component';
@@ -58,9 +58,10 @@ import { ReporteAnalisisComponent } from './pages/Reportes/reporte-analisis/repo
 import { DetalladoContratistaComponent } from './pages/Reportes/detallado-contratista/detallado-contratista.component';
 import { PrecioEmpresaComponent } from './pages/Mantenimientos/precio-empresa/precio-empresa.component';
 import { TooltipModule } from 'ngx-bootstrap/tooltip';
+import { ListaObrasComponent } from './pages/Procesos/lista-obras/lista-obras.component';
 
-const config: SocketIoConfig = { url: 'http://190.223.38.245:5000', options: {} }; 
-  
+const config: SocketIoConfig = { url: 'http://190.223.38.245:5000', options: {} };
+
 
 @NgModule({
   declarations: [
@@ -87,7 +88,8 @@ const config: SocketIoConfig = { url: 'http://190.223.38.245:5000', options: {} 
     EstadosComponent,
     ReporteAnalisisComponent,
     DetalladoContratistaComponent,
-    PrecioEmpresaComponent
+    PrecioEmpresaComponent,
+    ListaObrasComponent
   ],
   imports: [
     BrowserModule,
@@ -113,9 +115,9 @@ export class AppModule {
   datepiekerConfig:Partial<BsDatepickerConfig>
 
   ///---definiendo la fecha Español global --
- constructor(private localeService: BsLocaleService){  
+ constructor(private localeService: BsLocaleService){
   this.defineLocales();
-  this.localeService.use('es'); 
+  this.localeService.use('es');
  }
 
   defineLocales() {
@@ -123,5 +125,5 @@ export class AppModule {
         defineLocale(locales[locale].abbr, locales[locale]);
     }
   }
- 
+
  }

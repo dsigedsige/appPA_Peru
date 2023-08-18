@@ -127,7 +127,7 @@ namespace WebApi_3R_Dominion.Controllers.Proceso
                     int idUsuario = Convert.ToInt32(parametros[2].ToString());
 
                     res.ok = true;
-                    res.data = obj_negocio.get_descargar_Todos_fotosOT(idOt, idTipoOT, idUsuario);
+                    res.data = obj_negocio.get_descargar_Todos_fotosOT(idOt, idTipoOT, idUsuario); 
                     res.totalpage = 0;
                     resul = res;
                 }

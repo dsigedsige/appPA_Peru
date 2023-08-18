@@ -16,7 +16,7 @@ namespace WebApi_3R_Dominion.Controllers.Reporte
         public object GetAprobarOrdenTrabajo(int opcion, string filtro)
         {
             Resultado res = new Resultado();
-            Reportes_BL obj_negocio = new Reportes_BL();
+            Reportes_BL obj_negocio = new Reportes_BL(); 
             object resul = null;
             try
             {

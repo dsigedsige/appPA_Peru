@@ -20,43 +20,45 @@ import { EstadosComponent } from './pages/Mantenimientos/estados/estados.compone
 import { ReporteAnalisisComponent } from './pages/Reportes/reporte-analisis/reporte-analisis.component';
 import { DetalladoContratistaComponent } from './pages/Reportes/detallado-contratista/detallado-contratista.component';
 import { PrecioEmpresaComponent } from './pages/Mantenimientos/precio-empresa/precio-empresa.component';
- 
- 
+import { ListaObrasComponent } from './pages/Procesos/lista-obras/lista-obras.component';
+
+
 const APP_ROUTERS: Routes = [
-    //{ path: 'home', component: HomeComponent  ,  canActivate: [AuthGuard]},  
-    { path: '', component: HomeComponent},  
-    { path: 'mantenimiento-proveedor', component: ProveedorComponent},  
-    { path: 'mantenimiento-personal', component: PersonalComponent},  
-    { path: 'mantenimiento-usuarios', component: UsuariosComponent},  
-    { path: 'mantenimiento-distritos', component: DistritosComponent},  
-    { path: 'mantenimiento-lista-precios', component: ListaPreciosComponent},  
+    //{ path: 'home', component: HomeComponent  ,  canActivate: [AuthGuard]},
+    { path: '', component: HomeComponent},
+    { path: 'mantenimiento-proveedor', component: ProveedorComponent},
+    { path: 'mantenimiento-personal', component: PersonalComponent},
+    { path: 'mantenimiento-usuarios', component: UsuariosComponent},
+    { path: 'mantenimiento-distritos', component: DistritosComponent},
+    { path: 'mantenimiento-lista-precios', component: ListaPreciosComponent},
 
 
-    { path: 'proceso-orden-trabajo', component: OrdenTrabajoComponent},  
-    { path: 'proceso-aprobacion-orden-trabajo', component: AprobacionOTComponent},  
+    { path: 'proceso-orden-trabajo', component: OrdenTrabajoComponent},
+    { path: 'proceso-aprobacion-orden-trabajo', component: AprobacionOTComponent},
 
-    { path: 'reporte-ubicacion-personal', component: UbicacionPersonalComponent},  
-    { path: 'reporte-detalle-ot', component: DetalleOTComponent},  
-    { path: 'reporte-fuerza-plazo', component: FueraPlazoComponent},  
+    { path: 'reporte-ubicacion-personal', component: UbicacionPersonalComponent},
+    { path: 'reporte-detalle-ot', component: DetalleOTComponent},
+    { path: 'reporte-fuerza-plazo', component: FueraPlazoComponent},
 
-    { path: 'mantenimiento-config-zonas', component: ConfiguracionZonasComponent},  
-    { path: 'reporte-ubicacion-ot', component: UbicacionOtComponent},  
+    { path: 'mantenimiento-config-zonas', component: ConfiguracionZonasComponent},
+    { path: 'reporte-ubicacion-ot', component: UbicacionOtComponent},
 
-    { path: 'seguridad-accesos', component: AccesosComponent , canActivate: [ AuthGuard]}, 
-    { path: 'mantenimiento-cargo-personal', component: CargoPersonalComponent},  
-    { path: 'mantenimiento-areas', component: AreasComponent},  
-    { path: 'mantenimiento-estados', component: EstadosComponent},  
+    { path: 'seguridad-accesos', component: AccesosComponent , canActivate: [ AuthGuard]},
+    { path: 'mantenimiento-cargo-personal', component: CargoPersonalComponent},
+    { path: 'mantenimiento-areas', component: AreasComponent},
+    { path: 'mantenimiento-estados', component: EstadosComponent},
 
-    { path: 'reporte-analisis', component: ReporteAnalisisComponent},  
-    { path: 'reporte-detallado-contratista', component: DetalladoContratistaComponent},  
+    { path: 'reporte-analisis', component: ReporteAnalisisComponent},
+    { path: 'reporte-detallado-contratista', component: DetalladoContratistaComponent},
 
-    { path: 'mantenimiento-precio-empresa', component: PrecioEmpresaComponent }, 
+    { path: 'mantenimiento-precio-empresa', component: PrecioEmpresaComponent },
+
+    { path: 'lista-obras', component: ListaObrasComponent },
 
     { path: '', pathMatch:'full', redirectTo:'inicio' },
     { path: '**', pathMatch:'full', redirectTo:'inicio' },
   ];
-  
-  export const APP_ROUTING = RouterModule.forRoot(APP_ROUTERS,{useHash:true});  
+
+  export const APP_ROUTING = RouterModule.forRoot(APP_ROUTERS,{useHash:true});
 
 
- 

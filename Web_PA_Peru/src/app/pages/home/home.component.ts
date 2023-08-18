@@ -11,15 +11,15 @@ declare var $:any;
   styleUrls: ['./home.component.css']
 })
 export class HomeComponent implements OnInit {
-   
+
   showMenu:boolean=false;
   formParams : FormGroup;
- 
-  constructor( private alertasService :AlertasService, private spinner: NgxSpinnerService, private loginService : LoginService, private router:Router) { 
+
+  constructor( private alertasService :AlertasService, private spinner: NgxSpinnerService, private loginService : LoginService, private router:Router) {
 
     this.loginService.isLogginUser$.subscribe(obj => {
       this.showMenu = obj.status;
-     }); 
+     });
      this.inicializarFormularioAnuncio();
   }
 
@@ -28,33 +28,34 @@ export class HomeComponent implements OnInit {
   }
 
 
-  inicializarFormularioAnuncio(){ 
+  inicializarFormularioAnuncio(){
     this.formParams = new FormGroup({
-      usuario : new FormControl(''), 
+      usuario : new FormControl(''),
       contrasenia : new FormControl('')
      })
   }
 
-  
-  iniciarSesion(){
 
+  iniciarSesion(){
+debugger;
     if (this.formParams.value.usuario == '' || this.formParams.value.usuario == 0) {
       this.alertasService.Swal_alert('error','Ingrese el usuario');
-      return 
+      return
     }
     if (this.formParams.value.contrasenia == '' || this.formParams.value.contrasenia == null) {
       this.alertasService.Swal_alert('error','Ingrese la contraseña');
-      return 
+      return
     }
 
     this.spinner.show();
     this.loginService.get_iniciarSesion(this.formParams.value.usuario, this.formParams.value.contrasenia.trim())
         .subscribe((res:any)=>{
           this.spinner.hide();
-          if (res.ok==true) {               
+          if (res.ok==true) {
+             
           }else{
-            this.alertasService.Swal_alert('error',JSON.stringify(res.data)); 
-          } 
+            this.alertasService.Swal_alert('error',JSON.stringify(res.data));
+          }
         }, (error)=>{
           this.spinner.hide();
           alert(JSON.stringify(error));

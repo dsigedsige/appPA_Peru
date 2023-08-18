@@ -8,7 +8,7 @@ import { NgxSpinnerService } from 'ngx-spinner';
 import { LoginService } from '../../../services/login/login.service';
 import { from, combineLatest } from 'rxjs';
 import Swal from 'sweetalert2';
- 
+
 import { ListaPreciosService } from '../../../services/Mantenimientos/lista-precios.service';
 import { OrdenTrabajoService } from '../../../services/Procesos/orden-trabajo.service';
 import { BsDatepickerConfig } from 'ngx-bootstrap/datepicker';
@@ -21,7 +21,7 @@ declare var $:any;
   templateUrl: './orden-trabajo.component.html',
   styleUrls: ['./orden-trabajo.component.css']
 })
- 
+
 export class OrdenTrabajoComponent implements OnInit  {
 
   formParamsFiltro : FormGroup;
@@ -32,23 +32,23 @@ export class OrdenTrabajoComponent implements OnInit  {
   idUserGlobal :number = 0;
   flag_modoEdicion :boolean =false
 
-  servicios :any[]=[];   
+  servicios :any[]=[];
   distritos :any[]=[];
-  proveedor :any[]=[];   
-  estados :any[]=[];   
+  proveedor :any[]=[];
+  estados :any[]=[];
   tipoOrdenTrabajo :any[]=[];
   jefeCuadrillaEmpresa :any[]=[];
- 
-  ordenTrabajoCab :any[]=[]; 
-  ordenTrabajoAsignacion :any[]=[]; 
+
+  ordenTrabajoCab :any[]=[];
+  ordenTrabajoAsignacion :any[]=[];
   filtrarMantenimiento = "";
   opcionModal = "";
   tituloModal = "";
 
-  tabControlDetalle: string[] = ['LISTA DE ORDENES','PUNTOS EN EL MAPA' ]; 
+  tabControlDetalle: string[] = ['LISTA DE ORDENES','PUNTOS EN EL MAPA' ];
   selectedTabControlDetalle :any;
 
-  checkeadoAll=false; 
+  checkeadoAll=false;
   datepiekerConfig:Partial<BsDatepickerConfig>;
   totalGlobal =0;
 
@@ -56,7 +56,7 @@ export class OrdenTrabajoComponent implements OnInit  {
   totalM3_asignado =0;
   totalM3_pendiente =0;
 
-  reporteResumen:any[]=[]; 
+  reporteResumen:any[]=[];
   flagMapa=false;
 
    /// configuracion google maps
@@ -94,51 +94,51 @@ export class OrdenTrabajoComponent implements OnInit  {
    id_estadoOTGlobal = 0;
    tipoTrabajo_OTOrigenGlobal = '';
    id_FotoOTGlobal = 0;
- 
+
    nroObraParteDiario_Global = '';
    fechaHora_Global = '';
- 
+
    totalGlobal14 =0;
    totalGlobal15 =0;
 
-   medidasDetalle :any[]=[]; 
-   desmonteDetalle :any[]=[]; 
-   fotosDetalle :any[]=[]; 
+   medidasDetalle :any[]=[];
+   desmonteDetalle :any[]=[];
+   fotosDetalle :any[]=[];
    detalleOT:any = {};
 
      //-TAB control
-  tabControlDetalle2: string[] = ['DATOS GENERALES','MEDIDAS','DESMONTE',]; 
+  tabControlDetalle2: string[] = ['DATOS GENERALES','MEDIDAS','DESMONTE',];
   selectedTabControlDetalle2 :any;
 
-  prioridades :any[]=[]; 
+  prioridades :any[]=[];
   idPrioridad =0;
   observacionPrioridad ="";
   idPerfil_global  =0 ;
-   
-  constructor(private alertasService : AlertasService, private spinner: NgxSpinnerService, private loginService: LoginService, private listaPreciosService : ListaPreciosService, private ordenTrabajoService : OrdenTrabajoService, private funcionGlobalServices : FuncionesglobalesService, private websocketService : WebsocketService, private aprobacionOTService : AprobacionOTService   ) {         
+
+  constructor(private alertasService : AlertasService, private spinner: NgxSpinnerService, private loginService: LoginService, private listaPreciosService : ListaPreciosService, private ordenTrabajoService : OrdenTrabajoService, private funcionGlobalServices : FuncionesglobalesService, private websocketService : WebsocketService, private aprobacionOTService : AprobacionOTService   ) {
     this.idUserGlobal = this.loginService.get_idUsuario();
-    this.idPerfil_global = this.loginService.get_idPerfil();  
+    this.idPerfil_global = this.loginService.get_idPerfil();
   }
- 
+
  ngOnInit(): void {
   this.selectedTabControlDetalle = this.tabControlDetalle[0];
   this.selectedTabControlDetalle2 = this.tabControlDetalle2[0];
    this.getCargarCombos();
    this.inicializarFormularioFiltro();
    this.inicializarFormulario_Asignacion();
-   this.inicializarFormularioMapa();  
-   this.inicializarFormularioDatosG() 
+   this.inicializarFormularioMapa();
+   this.inicializarFormularioDatosG()
  }
 
- inicializarFormularioDatosG(){ 
-  this.formParamsDatosG= new FormGroup({ 
+ inicializarFormularioDatosG(){
+  this.formParamsDatosG= new FormGroup({
     direccion : new FormControl(''),
     idDistrito : new FormControl('0'),
     referencia : new FormControl(''),
     descripcionTrabajo : new FormControl(''),
-    idEstado : new FormControl(''), 
-   }) 
-} 
+    idEstado : new FormControl(''),
+   })
+}
 
 
 
@@ -150,20 +150,20 @@ export class OrdenTrabajoComponent implements OnInit  {
         mapTypeControl: true,
         zoomControl: true,
         zoomControlOptions: {
-            position: google.maps.ControlPosition.RIGHT_CENTER 
+            position: google.maps.ControlPosition.RIGHT_CENTER
         },
         scaleControl: true,
         streetViewControl: true,
         streetViewControlOptions: {
-            position: google.maps.ControlPosition.RIGHT_CENTER 
+            position: google.maps.ControlPosition.RIGHT_CENTER
         }
     });
- 
+
 
     this.markers = [];
     this.polys = [];
     this.limpiarDibujo();
- 
+
 
     //### Add a button on Google Maps ...
     let  controlMarkerUI = document.createElement('DIV');
@@ -197,7 +197,7 @@ export class OrdenTrabajoComponent implements OnInit  {
     controlTrashUI.title = 'Quitar marcado';
 
     this.map.controls[google.maps.ControlPosition.TOP_CENTER].push(controlTrashUI);
-    
+
     if (!document.getElementById("legend")) {
         document.getElementById("content_leyenda").innerHTML = "<div id='legend'></div>";
         const icons = {
@@ -248,8 +248,8 @@ export class OrdenTrabajoComponent implements OnInit  {
         }
 
         this.map.controls[google.maps.ControlPosition.LEFT_CENTER].push(legend);
-    }   
-                                                                 
+    }
+
     controlMarkerUI.addEventListener('click', ()=> {
         this.activarDibujo(1);
     });
@@ -259,7 +259,7 @@ export class OrdenTrabajoComponent implements OnInit  {
     });
 
     controlTrashUI.addEventListener('click', ()=> {
-        this.limpiarDibujo();                
+        this.limpiarDibujo();
     });
  };
 
@@ -301,8 +301,8 @@ export class OrdenTrabajoComponent implements OnInit  {
 
       this.poly.setMap(null);
       // this.polys.forEach(poly=>poly.setMap(null));
-      //this.limpiarDibujo();      
- 
+      //this.limpiarDibujo();
+
       const poly = new google.maps.Polygon({
           map: this.map,
           paths: paths,
@@ -340,8 +340,8 @@ export class OrdenTrabajoComponent implements OnInit  {
  }
 
  changeIconColorPolyLine(polys:google.maps.Polygon) {
- 
-  for (var i = 0; i < this.markers.length; i++) { 
+
+  for (var i = 0; i < this.markers.length; i++) {
       const cordLatLong = this.markers[i].getPosition();
 
       if (google.maps.geometry.poly.containsLocation(cordLatLong, polys)) {
@@ -349,17 +349,17 @@ export class OrdenTrabajoComponent implements OnInit  {
           if (estado == 8 || estado == 9) {
               this.markers[i].setIcon(this.iconPorAsignar);
           }
-      }  
+      }
   }
 
-  // var total_a = verMarcadosCount(); 
+  // var total_a = verMarcadosCount();
   // setTimeout(function () {
   //     document.getElementById('total_marcado').innerHTML ='Total marcado :' +  total_a;
   // }, 100);
  }
 
  limpiarDibujo() {
-  if (this.poly != null) {    
+  if (this.poly != null) {
       this.poly.setMap(null);
       this.polys.forEach(poly=>poly.setMap(null));
   };
@@ -377,7 +377,7 @@ export class OrdenTrabajoComponent implements OnInit  {
   // setTimeout(function () {
   //     document.getElementById('total_marcado').innerHTML = 'Total marcado : 0';
   // }, 100);
- }                              
+ }
 
  limpiarTodo() {
   this.markers.forEach((marker, index)=> {
@@ -391,7 +391,7 @@ export class OrdenTrabajoComponent implements OnInit  {
       }
   });
 
-  // setTimeout(function () {            
+  // setTimeout(function () {
   //     document.getElementById('total_registros').innerHTML = 'Total registro : 0';
   //     document.getElementById('total_marcado').innerHTML = 'Total marcado : 0';
   // }, 100);
@@ -412,13 +412,13 @@ export class OrdenTrabajoComponent implements OnInit  {
 
     if (this.formParamsFiltro.value.idEstado == '' || this.formParamsFiltro.value.idEstado == 0) {
       this.alertasService.Swal_alert('error','Por favor seleccione el Estado de la pantalla Pricipal');
-      return 
-    } 
+      return
+    }
 
     if (this.registrosMapaOT.length == 0) {
       return;
     }
-    
+
     if (this.OTMarcados_validacion() == false) {
       this.alertasService.Swal_alert('error','Por favor seleccione una OT que desea Asignar o Reasignar');
       return;
@@ -441,21 +441,21 @@ export class OrdenTrabajoComponent implements OnInit  {
 }
 
  actualizarOT(){
- 
+
   if (this.formParamsMapa.value.idEmpresa == '' || this.formParamsMapa.value.idEmpresa == 0) {
     this.alertasService.Swal_alert('error','Por favor seleccione la Sub Contrata');
-    return 
+    return
   }
-    
+
   if (this.formParamsMapa.value.idCuadrilla == '' || this.formParamsMapa.value.idCuadrilla == 0) {
       this.alertasService.Swal_alert('error','Por favor seleccione la Cuadrilla');
-      return     
+      return
   }
 
   if (this.formParamsFiltro.value.idEstado == '' || this.formParamsFiltro.value.idEstado == 0) {
       this.alertasService.Swal_alert('error','Por favor seleccione el Estado de la pantalla Pricipal');
-      return 
-  } 
+      return
+  }
 
   const listOT = this.oTMarcados();
 
@@ -463,17 +463,17 @@ export class OrdenTrabajoComponent implements OnInit  {
     this.alertasService.Swal_alert('error','No ha seleccionado ninguna Ot, vuelva a intentar ');
     return;
   }
-  
+
   this.formParamsMapa.patchValue({ "idEstado" : this.formParamsFiltro.value.idEstado });
 
   this.spinner.show();
   this.ordenTrabajoService.save_MapaOrdenTrabajoCab_general( listOT.join(), this.formParamsMapa.value, this.idUserGlobal)
-      .subscribe((res:RespuestaServer)=>{            
+      .subscribe((res:RespuestaServer)=>{
           this.spinner.hide();
-          if (res.ok==true) {   
+          if (res.ok==true) {
             this.alertasService.Swal_Success("Proceso realizado correctamente..")
             this.cerrarModal_asignacion();
-            this.InicializarMapa(); 
+            this.InicializarMapa();
           }else{
             this.alertasService.Swal_alert('error', JSON.stringify(res.data));
             alert(JSON.stringify(res.data));
@@ -483,19 +483,19 @@ export class OrdenTrabajoComponent implements OnInit  {
  }
 
  cerrarModal_asignacion(){
-  $('#modal_asignar').modal('hide');    
+  $('#modal_asignar').modal('hide');
  }
 
- selectTab(nameTab:any){   
+ selectTab(nameTab:any){
   this.selectedTabControlDetalle = nameTab;
-  if( nameTab == 'PUNTOS EN EL MAPA') { 
+  if( nameTab == 'PUNTOS EN EL MAPA') {
     setTimeout(() => {
-      this.InicializarMapa(); 
-    }, 0);  
+      this.InicializarMapa();
+    }, 0);
   }
  }
 
- inicializarFormularioFiltro(){ 
+ inicializarFormularioFiltro(){
     this.formParamsFiltro= new FormGroup({
       idServicio : new FormControl('0'),
       idTipoOT : new FormControl('0'),
@@ -503,11 +503,11 @@ export class OrdenTrabajoComponent implements OnInit  {
       idProveedor : new FormControl('0'),
       idEstado : new FormControl('8'),
       nroOt : new FormControl(''),
-     }) 
+     })
  }
 
- inicializarFormulario_Asignacion(){ 
- 
+ inicializarFormulario_Asignacion(){
+
     this.formParams = new FormGroup({
       fechaAsignacion: new FormControl(new Date()),
       empresa1: new FormControl('0'),
@@ -515,33 +515,32 @@ export class OrdenTrabajoComponent implements OnInit  {
       empresa2: new FormControl('0'),
       jefeCuadrilla2: new FormControl('0'),
       observaciones: new FormControl(''),
-    }) 
- } 
+    })
+ }
 
- inicializarFormularioMapa(){ 
+ inicializarFormularioMapa(){
   this.formParamsMapa= new FormGroup({
     idEmpresa : new FormControl('0'),
     idCuadrilla : new FormControl('0'),
     idEstado : new FormControl('0')
-   }) 
+   })
 }
 
- getCargarCombos(){ 
+ getCargarCombos(){
     this.spinner.show();
-    combineLatest([this.ordenTrabajoService.get_servicio(this.idUserGlobal), this.listaPreciosService.get_tipoOrdenTrabajo(), this.ordenTrabajoService.get_Distritos(), 
+    combineLatest([this.ordenTrabajoService.get_servicio(this.idUserGlobal), this.listaPreciosService.get_tipoOrdenTrabajo(), this.ordenTrabajoService.get_Distritos(),
                    this.ordenTrabajoService.get_Proveedor_usuario(this.idUserGlobal), this.ordenTrabajoService.get_estados(this.idUserGlobal), this.listaPreciosService.get_prioridades() ]).subscribe( ([ _servicios, _tipoOrdenTrabajo, _distritos, _proveedor,_estados, _prioridades ])=>{
         this.servicios = _servicios;
-        this.tipoOrdenTrabajo = _tipoOrdenTrabajo; 
-        this.distritos = _distritos; 
-        this.proveedor = _proveedor; 
+        this.tipoOrdenTrabajo = _tipoOrdenTrabajo;
+        this.distritos = _distritos;
+        this.proveedor = _proveedor;
         this.estados = _estados;
         this.prioridades = _prioridades
-      this.spinner.hide(); 
+      this.spinner.hide();
     },(error)=>{
-      this.spinner.hide(); 
+      this.spinner.hide();
       alert(error);
     })
-
  }
 
  generarMarkets(data:any){
@@ -554,7 +553,7 @@ export class OrdenTrabajoComponent implements OnInit  {
   this.markers = [];
 
   this.polys.forEach(poly=>poly.setMap(null));
-  this.polys = [];   
+  this.polys = [];
 
 
   const lat = Number(data[0].latitud);
@@ -573,7 +572,7 @@ export class OrdenTrabajoComponent implements OnInit  {
           ContenidoMarker += '<tr><td>Jefe Cuadrilla</td><td style="width:100%">: ' + item.jefeCuadrilla + ' </td></tr>';
           ContenidoMarker += '<tr><td><strong>Fecha Asignacion</strong></td><td style="width:100%">: ' + item.fechaAsignacion + ' </td></tr>';
           ContenidoMarker += '<tr><td> </td><td style="width:100%"  > <button  id="btn' + item.id_OT + '" class="btn btn-block btn-outline-primary btn-sm ">Ver Informe</button> </td></tr></table>';
- 
+
       if (item.estado == 8 ) {
         icono = './assets/img/mapa/sum_pendiente.png';
         titulo = String(item.id_OT) + '|' + String('./assets/img/mapa/sum_pendiente.png') + '|' + String(item.estado);
@@ -603,62 +602,62 @@ export class OrdenTrabajoComponent implements OnInit  {
         this.infowindows.forEach(infoW => infoW.close());
         infowindow.setContent('<center><h4><b> UBICACIÓN OT </b></h4></center>' + ContenidoMarker);
         infowindow.open(this.map, marker);
-    })      
-    
+    })
+
     //-----modal informe
-    google.maps.event.addListener(infowindow, 'domready',   ()=> { 
-      if (document.getElementById('btn' + item.id_OT)) { 
-          google.maps.event.addDomListener(document.getElementById('btn' + item.id_OT), 'click', ()=> {  
-            this.abrirModal_OT({id_OT : item.id_OT,nroObra: item.nroOT ,fechaHora : item.fechaHora ,direccion: item.direccion , id_Distrito: item.id_Distrito , referencia : item.referencia, descripcion_OT : item.descripcion_OT, id_tipoTrabajo : item.id_tipoTrabajo ,id_estado: item.estado , tipoTrabajo_OTOrigen : item.tipoTrabajo_OTOrigen  })       
+    google.maps.event.addListener(infowindow, 'domready',   ()=> {
+      if (document.getElementById('btn' + item.id_OT)) {
+          google.maps.event.addDomListener(document.getElementById('btn' + item.id_OT), 'click', ()=> {
+            this.abrirModal_OT({id_OT : item.id_OT,nroObra: item.nroOT ,fechaHora : item.fechaHora ,direccion: item.direccion , id_Distrito: item.id_Distrito , referencia : item.referencia, descripcion_OT : item.descripcion_OT, id_tipoTrabajo : item.id_tipoTrabajo ,id_estado: item.estado , tipoTrabajo_OTOrigen : item.tipoTrabajo_OTOrigen  })
           });
           return
       } else {
           return
       }
     })
-      
 
-  })   
+
+  })
  }
 
  mostrarInformacion(){
     if (this.formParamsFiltro.value.idServicio == '' || this.formParamsFiltro.value.idServicio == 0) {
       this.alertasService.Swal_alert('error','Por favor seleccione el servicio');
-      return 
+      return
     }
-    
+
     if (this.formParamsFiltro.value.idTipoOT == '' || this.formParamsFiltro.value.idTipoOT == 0) {
       this.alertasService.Swal_alert('error','Por favor seleccione el Tipo de Orden Trabajo');
-      return 
-    }  
+      return
+    }
 
     // if (this.formParamsFiltro.value.idDistrito == '' || this.formParamsFiltro.value.idDistrito == 0) {
     //   this.alertasService.Swal_alert('error','Por favor seleccione un Distrito');
-    //   return 
+    //   return
     // }
 
     // if (this.formParamsFiltro.value.idProveedor == '' || this.formParamsFiltro.value.idProveedor == 0) {
     //   this.alertasService.Swal_alert('error','Por favor seleccione un Proveedor');
-    //   return 
+    //   return
     // }
 
     if (this.formParamsFiltro.value.idEstado == '' || this.formParamsFiltro.value.idEstado == 0) {
       this.alertasService.Swal_alert('error','Por favor seleccione un Estado');
-      return 
-    } 
+      return
+    }
 
-    this.checkeadoAll=false; 
+    this.checkeadoAll=false;
 
     if ( this.selectedTabControlDetalle  == 'PUNTOS EN EL MAPA') {
 
       this.spinner.show();
       this.ordenTrabajoService.get_MapaOrdenTrabajoCab_general(this.formParamsFiltro.value, this.idUserGlobal)
-          .subscribe((res:RespuestaServer)=>{            
+          .subscribe((res:RespuestaServer)=>{
               this.spinner.hide();
-              if (res.ok==true) {        
-                  this.registrosMapaOT = res.data; 
+              if (res.ok==true) {
+                  this.registrosMapaOT = res.data;
 
-                  if ( this.registrosMapaOT.length > 0) {                
+                  if ( this.registrosMapaOT.length > 0) {
                     this.generarMarkets(this.registrosMapaOT)
                   }
 
@@ -667,14 +666,14 @@ export class OrdenTrabajoComponent implements OnInit  {
                 alert(JSON.stringify(res.data));
               }
       })
-      
+
     }else{
       this.spinner.show();
       this.ordenTrabajoService.get_mostrarOrdenTrabajoCab_general(this.formParamsFiltro.value, this.idUserGlobal)
-          .subscribe((res:RespuestaServer)=>{            
+          .subscribe((res:RespuestaServer)=>{
               this.spinner.hide();
-              if (res.ok==true) {        
-                  this.ordenTrabajoCab = res.data; 
+              if (res.ok==true) {
+                  this.ordenTrabajoCab = res.data;
               }else{
                 this.alertasService.Swal_alert('error', JSON.stringify(res.data));
                 alert(JSON.stringify(res.data));
@@ -683,7 +682,7 @@ export class OrdenTrabajoComponent implements OnInit  {
     }
 
 
- }  
+ }
 
  expandirComprimir(tipo:number){
    if (tipo == 1) {
@@ -705,38 +704,38 @@ export class OrdenTrabajoComponent implements OnInit  {
 
   }
  }
- 
+
  mostrarDetalleMapaOT(){
       if (this.formParamsFiltro.value.idServicio == '' || this.formParamsFiltro.value.idServicio == 0) {
       this.alertasService.Swal_alert('error','Por favor seleccione el servicio');
-      return 
+      return
     }
-    
+
     if (this.formParamsFiltro.value.idTipoOT == '' || this.formParamsFiltro.value.idTipoOT == 0) {
       this.alertasService.Swal_alert('error','Por favor seleccione el Tipo de Orden Trabajo');
-      return 
-    }  
+      return
+    }
 
     // if (this.formParamsFiltro.value.idDistrito == '' || this.formParamsFiltro.value.idDistrito == 0) {
     //   this.alertasService.Swal_alert('error','Por favor seleccione un Distrito');
-    //   return 
+    //   return
     // }
 
     // if (this.formParamsFiltro.value.idProveedor == '' || this.formParamsFiltro.value.idProveedor == 0) {
     //   this.alertasService.Swal_alert('error','Por favor seleccione un Proveedor');
-    //   return 
+    //   return
     // }
 
     if (this.formParamsFiltro.value.idEstado == '' || this.formParamsFiltro.value.idEstado == 0) {
       this.alertasService.Swal_alert('error','Por favor seleccione un Estado');
-      return 
+      return
     }
- 
+
     this.spinner.show();
     this.ordenTrabajoService.get_detalleMapaOrdenTrabajoCab(this.formParamsFiltro.value, this.idUserGlobal)
-        .subscribe((res:RespuestaServer)=>{            
+        .subscribe((res:RespuestaServer)=>{
             this.spinner.hide();
-            if (res.ok==true) {        
+            if (res.ok==true) {
                this.detalleRegistrosMapaOT = res.data;
             }else{
               this.alertasService.Swal_alert('error', JSON.stringify(res.data));
@@ -745,11 +744,11 @@ export class OrdenTrabajoComponent implements OnInit  {
     })
 
  }
-  
+
  cerrarModal(){
-    setTimeout(()=>{ // 
-      $('#modal_OT').modal('hide');  
-    },0); 
+    setTimeout(()=>{ //
+      $('#modal_OT').modal('hide');
+    },0);
  }
 
  marcarTodos(){
@@ -765,7 +764,7 @@ export class OrdenTrabajoComponent implements OnInit  {
   }
  }
 
- validacionCheckMarcado(){    
+ validacionCheckMarcado(){
   let CheckMarcado = false;
   CheckMarcado = this.funcionGlobalServices.verificarCheck_marcado(this.ordenTrabajoCab);
 
@@ -778,42 +777,42 @@ export class OrdenTrabajoComponent implements OnInit  {
 }
 
  obtnerCheckMarcado_opcion(opcionModal){
-  
-    let listRegistros =[]; 
+
+    let listRegistros =[];
     // listRegistros = this.ordenTrabajoCab.filter(ot => ot.checkeado &&  ( ot.id_Estado ==4 || ot.id_Estado == 6 || ot.id_Estado ==7 || ot.id_Estado ==23 ) ).map((obj)=>{
     listRegistros = this.ordenTrabajoCab.filter(ot => ot.checkeado).map((obj)=>{
       return {  id_OT : obj.id_OT, tipoOT : obj.tipoOT, nroObra: obj.nroObra, direccion : obj.direccion, distrito : obj.distrito  , empresaContratista : obj.empresaContratista, jefeCuadrilla : obj.jefeCuadrilla  , volumen : obj.volumen } ;
     });
-  
-  
+
+
     return listRegistros;
  }
-   
+
    abrir_modalOT(opcionModal :string){
-  
+
     if (this.validacionCheckMarcado()==false){
       return;
-    } 
-  
+    }
+
     this.opcionModal = opcionModal;
-  
-    if (opcionModal == 'Asignar') {    
+
+    if (opcionModal == 'Asignar') {
         this.tituloModal = "ASIGNACION DE ORDENES DE TRABAJO";
-    }else{    
+    }else{
         this.tituloModal = "REASIGNACION DE ORDENES DE TRABAJO";
     }
-  
+
     this.ordenTrabajoAsignacion = [];
-    this.ordenTrabajoAsignacion = this.obtnerCheckMarcado_opcion( this.opcionModal); 
-  
+    this.ordenTrabajoAsignacion = this.obtnerCheckMarcado_opcion( this.opcionModal);
+
     // if ( this.ordenTrabajoAsignacion.length ==0 ) {
     //   this.alertasService.Swal_alert('error','Por favor verifique o complete el proceso');
     //   return;
-    // }    
-      setTimeout(()=>{ // 
+    // }
+      setTimeout(()=>{ //
         $('#modal_OT').modal('show');
-      },0); 
-  
+      },0);
+
       this.inicializarFormulario_Asignacion();
       this.CalculototalGlobal();
    }
@@ -822,32 +821,32 @@ export class OrdenTrabajoComponent implements OnInit  {
    anularOT(){
     if (this.validacionCheckMarcado()==false){
       return;
-    } 
+    }
 
-    const codigosIdOT = this.funcionGlobalServices.obtenerCheck_IdPrincipal(this.ordenTrabajoCab,'id_OT');   
-      
+    const codigosIdOT = this.funcionGlobalServices.obtenerCheck_IdPrincipal(this.ordenTrabajoCab,'id_OT');
+
      this.alertasService.Swal_Question('Sistemas', 'Esta seguro de anular ?')
      .then((result)=>{
        if(result.value){
-  
+
          Swal.fire({  icon: 'info', allowOutsideClick: false, allowEscapeKey: false, text: 'Espere por favor'  })
          Swal.showLoading();
          this.ordenTrabajoService.set_anular_ordenTrabajoMasivo( codigosIdOT.join(), this.idUserGlobal ).subscribe((res:RespuestaServer)=>{
-           Swal.close();        
-           if (res.ok ==true) { 
-             
-           //-----listando la informacion  
-             this.mostrarInformacion();  
-             this.alertasService.Swal_Success('Se anulo correctamente..')  
-  
+           Swal.close();
+           if (res.ok ==true) {
+
+           //-----listando la informacion
+             this.mostrarInformacion();
+             this.alertasService.Swal_Success('Se anulo correctamente..')
+
            }else{
              this.alertasService.Swal_alert('error', JSON.stringify(res.data));
              alert(JSON.stringify(res.data));
            }
          })
-          
+
        }
-     }) 
+     })
 
   }
 
@@ -861,19 +860,19 @@ export class OrdenTrabajoComponent implements OnInit  {
     }
     return flagProveedor;
   }
-  
+
   guardar_AsignacionReasignacion_Ot(){
     if (this.ordenTrabajoAsignacion.length <=0) {
       this.alertasService.Swal_alert('error', 'No hay datos para almacenar.');
       return;
     }
-  
+
     if (this.formParams.value.fechaAsignacion == '' || this.formParams.value.proyectista == 0 || this.formParams.value.fechaAsignacion == null)  {
       this.alertasService.Swal_alert('error', 'Por favor seleccione la fecha de asignacion.');
       return;
-    } 
-  
-    if (this.opcionModal == 'Asignar') { // 
+    }
+
+    if (this.opcionModal == 'Asignar') { //
       if (this.formParams.value.empresa1 == '' || this.formParams.value.empresa1 == 0 || this.formParams.value.empresa1 == null)  {
         this.alertasService.Swal_alert('error', 'Por favor seleccione la Sub Contrata.');
         return;
@@ -882,35 +881,35 @@ export class OrdenTrabajoComponent implements OnInit  {
         if (this.formParams.value.jefeCuadrilla1 == '' || this.formParams.value.jefeCuadrilla1 == 0 || this.formParams.value.jefeCuadrilla1 == null)  {
           this.alertasService.Swal_alert('error', 'Por favor seleccione el jefe de cuadrilla.');
           return;
-        } 
+        }
       }
-    } 
-    if (this.opcionModal == 'Reasignar') { // 
+    }
+    if (this.opcionModal == 'Reasignar') { //
       if (this.formParams.value.empresa2 == '' || this.formParams.value.empresa2 == 0 || this.formParams.value.empresa2 == null)  {
         this.alertasService.Swal_alert('error', 'Por favor seleccione la empresa.');
         return;
-      }      
+      }
       if( this.verificarProveedor(this.formParams.value.empresa2) ==0 ){
         if (this.formParams.value.jefeCuadrilla2 == '' || this.formParams.value.jefeCuadrilla2 == 0 || this.formParams.value.jefeCuadrilla2 == null)  {
           this.alertasService.Swal_alert('error', 'Por favor seleccione el jefe de cuadrilla.');
           return;
         }
       }
-    } 
-  
-    const codigosIdOT = this.funcionGlobalServices.obtenerTodos_IdPrincipal(this.ordenTrabajoAsignacion,'id_OT'); 
-    const fechaFormato = this.funcionGlobalServices.formatoFecha(this.formParams.value.fechaAsignacion); 
-  
+    }
+
+    const codigosIdOT = this.funcionGlobalServices.obtenerTodos_IdPrincipal(this.ordenTrabajoAsignacion,'id_OT');
+    const fechaFormato = this.funcionGlobalServices.formatoFecha(this.formParams.value.fechaAsignacion);
+
     Swal.fire({
       icon: 'info', allowOutsideClick: false, allowEscapeKey: false, text: 'Espere por favor'
     })
     Swal.showLoading();
     this.ordenTrabajoService.save_asignacionReasignacion_Ot(codigosIdOT.join() ,this.opcionModal, this.formParams.value, fechaFormato, this.idUserGlobal ).subscribe((res:RespuestaServer)=>{
       Swal.close();
-      if (res.ok) { 
+      if (res.ok) {
          this.alertasService.Swal_Success("Proceso realizado correctamente..")
-           //-----listando la informacion  
-           this.mostrarInformacion();  
+           //-----listando la informacion
+           this.mostrarInformacion();
       }else{
         this.alertasService.Swal_alert('error', JSON.stringify(res.data));
         alert(JSON.stringify(res.data));
@@ -918,7 +917,7 @@ export class OrdenTrabajoComponent implements OnInit  {
     })
   }
 
-  eliminarCheckMarcado(item:any){    
+  eliminarCheckMarcado(item:any){
     var index = this.ordenTrabajoAsignacion.indexOf( item );
     this.ordenTrabajoAsignacion.splice( index, 1 );
     this.CalculototalGlobal();
@@ -929,32 +928,32 @@ export class OrdenTrabajoComponent implements OnInit  {
     for (const valor of this.ordenTrabajoAsignacion) {
      totalG += Number(valor.volumen);
     }
-  
+
     this.totalGlobal =  Number(totalG.toFixed(2))
   }
 
   changeCalculos_AsignacionReasignacion_Origen(opcion){
-    this.calculo_AsignacionReasignacion_Ot(this.formParams.value.empresa1, this.formParams.value.jefeCuadrilla1 )  
+    this.calculo_AsignacionReasignacion_Ot(this.formParams.value.empresa1, this.formParams.value.jefeCuadrilla1 )
   }
-  
+
   changeCalculos_AsignacionReasignacion_Destino(opcion){
-    this.calculo_AsignacionReasignacion_Ot(this.formParams.value.empresa2, this.formParams.value.jefeCuadrilla2 )  
+    this.calculo_AsignacionReasignacion_Ot(this.formParams.value.empresa2, this.formParams.value.jefeCuadrilla2 )
   }
-  
+
   calculo_AsignacionReasignacion_Ot(idEmpresa:number, idJefeCuadrilla:number){
     if (idEmpresa ==0 || idJefeCuadrilla == 0  ){
       this.totalM3_empresa =0;
       this.totalM3_asignado =0;
       this.totalM3_pendiente =0;
       return;
-    }  
-  
+    }
+
     this.spinner.show();
     this.ordenTrabajoService.get_calculos_asignarReasignar_Ot(idEmpresa, idJefeCuadrilla, this.opcionModal, this.idUserGlobal)
-        .subscribe((res:RespuestaServer)=>{            
+        .subscribe((res:RespuestaServer)=>{
             this.spinner.hide();
- 
-            if (res.ok==true) {        
+
+            if (res.ok==true) {
                if (res.data.length > 0) {
                 this.totalM3_empresa =  res.data[0].totalM3_empresa;
                 this.totalM3_asignado = res.data[0].totalM3_asignado;
@@ -970,34 +969,34 @@ export class OrdenTrabajoComponent implements OnInit  {
             }
     })
   }
-  
+
   cerrarModal_Resumen(){
-    $('#modal_resumen').modal('hide');    
+    $('#modal_resumen').modal('hide');
   }
-  
+
   abrirModal_Resumen(){
-  
+
         if (this.formParamsFiltro.value.idServicio == '' || this.formParamsFiltro.value.idServicio == 0) {
           this.alertasService.Swal_alert('error','Por favor seleccione el servicio');
-          return 
-        }
-        
-        if (this.formParamsFiltro.value.idTipoOT == '' || this.formParamsFiltro.value.idTipoOT == 0) {
-          this.alertasService.Swal_alert('error','Por favor seleccione el Tipo de Orden Trabajo');
-          return 
-        }  
-      
-        if (this.formParamsFiltro.value.idEstado == '' || this.formParamsFiltro.value.idEstado == 0) {
-          this.alertasService.Swal_alert('error','Por favor seleccione un Estado');
-          return 
+          return
         }
 
-    
+        if (this.formParamsFiltro.value.idTipoOT == '' || this.formParamsFiltro.value.idTipoOT == 0) {
+          this.alertasService.Swal_alert('error','Por favor seleccione el Tipo de Orden Trabajo');
+          return
+        }
+
+        if (this.formParamsFiltro.value.idEstado == '' || this.formParamsFiltro.value.idEstado == 0) {
+          this.alertasService.Swal_alert('error','Por favor seleccione un Estado');
+          return
+        }
+
+
         this.spinner.show();
         this.ordenTrabajoService.get_resumenOT_proveedor(this.formParamsFiltro.value, this.idUserGlobal)
-            .subscribe((res:RespuestaServer)=>{            
+            .subscribe((res:RespuestaServer)=>{
                 this.spinner.hide();
-                if (res.ok==true) {        
+                if (res.ok==true) {
                   this.reporteResumen = res.data;
                   setTimeout(() => {
                    $('#modal_resumen').modal('show');
@@ -1017,49 +1016,49 @@ export class OrdenTrabajoComponent implements OnInit  {
 
     let listSocket = [];
     let total =0;
- 
+
    if (this.formParamsFiltro.value.idServicio == 1) { ///---obras se envia la cuadrilla
 
-      const listCuadrilla = [];        
+      const listCuadrilla = [];
       for (const item of listCheck) {
           if(!map.has(item.idJefeCuadrilla)){
-              map.set(item.idJefeCuadrilla, true);    
+              map.set(item.idJefeCuadrilla, true);
               listCuadrilla.push({ cuadrilla: item.idJefeCuadrilla });
           }
-      } 
+      }
 
       total =0;
-      for (const objCuadrilla of listCuadrilla) {          
+      for (const objCuadrilla of listCuadrilla) {
         total =0;
         for (const datos of listCheck) {
           if (objCuadrilla.cuadrilla == datos.idJefeCuadrilla ) {
-            total += 1; 
+            total += 1;
           }
         }
         listSocket.push({id:objCuadrilla.cuadrilla , cantidadOT :  total, tipo : 'cuadrilla', mensaje : `Usted tiene  ${total} ot, asignada`});
       }
- 
+
 
    }else{ ///---  se envia la empresa contratista ---
 
-      const listEmpresa = [];        
+      const listEmpresa = [];
       for (const item of listCheck) {
           if(!map.has(item.idEmpresa)){
-              map.set(item.idEmpresa, true);  
+              map.set(item.idEmpresa, true);
               listEmpresa.push({ empresa: item.idEmpresa });
           }
       }
 
-      for (const objEmpresa of listEmpresa) {          
+      for (const objEmpresa of listEmpresa) {
         total =0;
         for (const datos of listCheck) {
           if (objEmpresa.empresa == datos.idEmpresa ) {
-            total += 1; 
+            total += 1;
           }
         }
-        listSocket.push({id : objEmpresa.empresa , cantidadOT :  total , tipo : 'empresa', mensaje : `Usted tiene  ${total} ot, asignada`});        
+        listSocket.push({id : objEmpresa.empresa , cantidadOT :  total , tipo : 'empresa', mensaje : `Usted tiene  ${total} ot, asignada`});
       }
- 
+
    }
 
    return listSocket;
@@ -1075,48 +1074,48 @@ export class OrdenTrabajoComponent implements OnInit  {
     let listSocket = [];
     let total =0;
 
-    const listEmpresaCuadrilla = [];        
+    const listEmpresaCuadrilla = [];
     for (const item of listCheck) {
         if(!map.has(item.idEmpresa +'-'+ item.idJefeCuadrilla )){
-            map.set(item.idEmpresa +'-'+ item.idJefeCuadrilla, true);  
+            map.set(item.idEmpresa +'-'+ item.idJefeCuadrilla, true);
             listEmpresaCuadrilla.push({ empresaCuadrilla: item.idEmpresa +'-'+ item.idJefeCuadrilla , empresa: item.idEmpresa, cuadrilla : item.idJefeCuadrilla  });
         }
     }
 
-    for (const objEmpresa of listEmpresaCuadrilla) {          
+    for (const objEmpresa of listEmpresaCuadrilla) {
         total =0;
         for (const datos of listCheck) {
           if (datos.idEmpresa +'-'+ datos.idJefeCuadrilla  == objEmpresa.empresaCuadrilla ) {
-            total += 1; 
+            total += 1;
           }
         }
-        listSocket.push({idEmpresa : objEmpresa.empresa , 
-                        idCuadrilla : objEmpresa.cuadrilla, 
-                        cantidadOT :  total , 
-                        idServicio : this.formParamsFiltro.value.idServicio , 
-                        idTipoOT : this.formParamsFiltro.value.idTipoOT , 
+        listSocket.push({idEmpresa : objEmpresa.empresa ,
+                        idCuadrilla : objEmpresa.cuadrilla,
+                        cantidadOT :  total ,
+                        idServicio : this.formParamsFiltro.value.idServicio ,
+                        idTipoOT : this.formParamsFiltro.value.idTipoOT ,
                         mensaje : `Usted tiene  ${total} ot, asignada`,
                         titulo : 'Alerta de OT Asignada - Dominion'
-                      },);     
- 
+                      },);
+
     }
 
    return listSocket;
 
   }
 
-  
-  enviarOT_jefeCuadrilla(){ 
+
+  enviarOT_jefeCuadrilla(){
 
     if (this.formParamsFiltro.value.idServicio == '' || this.formParamsFiltro.value.idServicio == 0) {
       this.alertasService.Swal_alert('error','Por favor seleccione el servicio');
-      return 
+      return
     }
 
     if (this.validacionCheckMarcado()==false){
       return;
-    } 
-    const codigosIdOT = this.funcionGlobalServices.obtenerCheck_IdPrincipal(this.ordenTrabajoCab,'id_OT'); 
+    }
+    const codigosIdOT = this.funcionGlobalServices.obtenerCheck_IdPrincipal(this.ordenTrabajoCab,'id_OT');
 
     this.alertasService.Swal_Question('Sistemas', 'Esta seguro de enviar las OT al Jefe de Cuadrilla ?')
     .then((result)=>{
@@ -1128,14 +1127,14 @@ export class OrdenTrabajoComponent implements OnInit  {
         Swal.showLoading();
         this.ordenTrabajoService.set_enviarOT_jefeCuadrilla(codigosIdOT.join() , this.idUserGlobal ).subscribe((res:RespuestaServer)=>{
           Swal.close();
-          if (res.ok) { 
+          if (res.ok) {
              this.alertasService.Swal_Success("Proceso realizado correctamente..")
-             
-           ////-- notificaciones Socket para el movil----    
-              const listOTSocket  = this.cantidadAsignadaOT_new();   
+
+           ////-- notificaciones Socket para el movil----
+              const listOTSocket  = this.cantidadAsignadaOT_new();
 
               console.log(listOTSocket);
-  
+
               this.websocketService.NotificacionOT_WebSocket(listOTSocket)
               .then( (res:any) =>{
                 if (res.ok==true) {
@@ -1147,45 +1146,45 @@ export class OrdenTrabajoComponent implements OnInit  {
               }).catch((error)=>{
                 this.alertasService.Swal_alert('Error Socket', JSON.stringify(error));
                 alert(JSON.stringify(error));
-              })                 
+              })
           ////-- Fin de notificaciones Socket para el movil----
 
-               //-----listando la informacion  
-             this.mostrarInformacion();  
+               //-----listando la informacion
+             this.mostrarInformacion();
           }else{
             this.alertasService.Swal_alert('error', JSON.stringify(res.data));
             alert(JSON.stringify(res.data));
           }
         })
- 
+
       }
     })
 
   }
 
   changeEmpresaJefeCuadrilla_origen(opcion){
-      this.get_jefeCuadrillaEmpresa(this.formParams.value.empresa1)  
+      this.get_jefeCuadrillaEmpresa(this.formParams.value.empresa1)
   }
 
   changeEmpresaJefeCuadrilla_destino(opcion){
-    this.get_jefeCuadrillaEmpresa(this.formParams.value.empresa2) 
+    this.get_jefeCuadrillaEmpresa(this.formParams.value.empresa2)
  }
 
  changeEmpresaJefeCuadrilla_mapa(opcion){
-   this.get_jefeCuadrillaEmpresa(opcion.target.value)  
+   this.get_jefeCuadrillaEmpresa(opcion.target.value)
  }
 
-   
+
  get_jefeCuadrillaEmpresa(idEmpresa:number ){
   if (idEmpresa ==0) {
     this.jefeCuadrillaEmpresa =[];
     return;
-  }  
+  }
   this.spinner.show();
   this.ordenTrabajoService.get_jefeCuadrilla_empresa(idEmpresa, this.idUserGlobal)
-      .subscribe((res:any)=>{   
-          this.spinner.hide();     
-          this.jefeCuadrillaEmpresa = res; 
+      .subscribe((res:any)=>{
+          this.spinner.hide();
+          this.jefeCuadrillaEmpresa = res;
   })
 }
 
@@ -1194,9 +1193,9 @@ export class OrdenTrabajoComponent implements OnInit  {
 
   // FIN DE  CONFIGURACION DE GOOGLE MAPS
   cerrarModal_OT(){
-    setTimeout(()=>{ // 
-      $('#modal_VisorOT').modal('hide');  
-    },0); 
+    setTimeout(()=>{ //
+      $('#modal_VisorOT').modal('hide');
+    },0);
   }
 
   descargarFotosOT(pantalla:string){
@@ -1204,33 +1203,33 @@ export class OrdenTrabajoComponent implements OnInit  {
     if (pantalla='P') {
       if (this.medidasDetalle.length ==0) {
         return;
-      }    
+      }
     }
-  
+
     Swal.fire({
       icon: 'info', allowOutsideClick: false, allowEscapeKey: false, text: 'Obteniendo Fotos, Espere por favor'
     })
-    Swal.showLoading();  
-    this.aprobacionOTService.get_descargarFotosOT_todos( this.id_OTGlobal, this.id_tipoOTGlobal, this.idUserGlobal ).subscribe( (res:any)=>{           
+    Swal.showLoading();
+    this.aprobacionOTService.get_descargarFotosOT_todos( this.id_OTGlobal, this.id_tipoOTGlobal, this.idUserGlobal ).subscribe( (res:any)=>{
       Swal.close();
-  
-      if (res.ok ==true) {   
+
+      if (res.ok ==true) {
        window.open(String(res.data),'_blank');
       }else{
         this.alertasService.Swal_alert('error', JSON.stringify(res.data));
         alert(JSON.stringify(res.data));
       }
-      
+
     })
-  
+
   }
 
-  abrirModal_visorFotos(objData:any){ 
+  abrirModal_visorFotos(objData:any){
 
     this.detalleOT = objData;
     this.id_FotoOTGlobal = objData.id_OTDet;
 
-    setTimeout(()=>{ // 
+    setTimeout(()=>{ //
       $('#modal_visorFotos').modal('show');
     },0);
 
@@ -1240,72 +1239,72 @@ export class OrdenTrabajoComponent implements OnInit  {
     Swal.showLoading();
     this.aprobacionOTService.get_fotosOT(objData.id_OTDet, this.id_tipoOTGlobal, this.idUserGlobal).subscribe((res:RespuestaServer)=>{
       Swal.close();
-      if (res.ok) {           
-        this.fotosDetalle = res.data;         
+      if (res.ok) {
+        this.fotosDetalle = res.data;
       }else{
         this.alertasService.Swal_alert('error', JSON.stringify(res.data));
         alert(JSON.stringify(res.data));
-      }      
+      }
      })
 
   }
-   
+
   cerrarModal_visor(){
-    $('#modal_visorFotos').modal('hide');    
+    $('#modal_visorFotos').modal('hide');
   }
-   
+
   descargarFotosOT_visor(pantalla:string){
- 
+
     if (this.fotosDetalle.length ==0) {
       return;
-    }    
+    }
     Swal.fire({
       icon: 'info', allowOutsideClick: false, allowEscapeKey: false, text: 'Obteniendo Fotos, Espere por favor'
     })
-    Swal.showLoading();  
-    this.aprobacionOTService.get_descargarFotosOT_visor( this.id_FotoOTGlobal , this.id_tipoOTGlobal, this.idUserGlobal ).subscribe( (res:any)=>{           
+    Swal.showLoading();
+    this.aprobacionOTService.get_descargarFotosOT_visor( this.id_FotoOTGlobal , this.id_tipoOTGlobal, this.idUserGlobal ).subscribe( (res:any)=>{
       Swal.close();
-  
-      if (res.ok ==true) {   
+
+      if (res.ok ==true) {
        window.open(String(res.data),'_blank');
       }else{
         this.alertasService.Swal_alert('error', JSON.stringify(res.data));
         alert(JSON.stringify(res.data));
       }
-      
+
     })
-  
+
   }
 
   get_medidasOT(){
     this.aprobacionOTService.get_medidasOT(this.id_OTGlobal, this.id_tipoOTGlobal, this.idUserGlobal, 'A').subscribe((res:RespuestaServer)=>{
-     if (res.ok) {            
-       this.medidasDetalle = res.data; 
-       
+     if (res.ok) {
+       this.medidasDetalle = res.data;
+
        let importeTotal =0;
        for (const iterator of  this.medidasDetalle) {
         importeTotal += iterator.total;
        }
-       
+
        this.totalGlobal = importeTotal;
-  
+
      }else{
        this.alertasService.Swal_alert('error', JSON.stringify(res.data));
        alert(JSON.stringify(res.data));
-     }      
-    })        
+     }
+    })
   }
 
   get_desmonteOT(){
     this.aprobacionOTService.get_mesmonteOT(this.id_OTGlobal, this.id_tipoOTGlobal, this.idUserGlobal, 'A').subscribe((res:RespuestaServer)=>{
-     if (res.ok) {            
-       this.desmonteDetalle = res.data; 
-       
+     if (res.ok) {
+       this.desmonteDetalle = res.data;
+
        let importeTotal14 =0;
        let importeTotal15 =0;
 
        for (const iterator of  this.desmonteDetalle) {
-         
+
           if (iterator.id_TipoMaterial == 14 ) {
             importeTotal14 += iterator.total;
           }
@@ -1314,63 +1313,63 @@ export class OrdenTrabajoComponent implements OnInit  {
           }
 
        }
-       
+
        this.totalGlobal14 = importeTotal14;
        this.totalGlobal15 = importeTotal15;
 
-  
+
      }else{
        this.alertasService.Swal_alert('error', JSON.stringify(res.data));
        alert(JSON.stringify(res.data));
-     }      
-    })        
+     }
+    })
   }
 
-  abrirModal_OT( {id_OT,nroObra,fechaHora,direccion, id_Distrito, referencia, descripcion_OT, id_tipoTrabajo,id_estado , tipoTrabajo_OTOrigen }){ 
+  abrirModal_OT( {id_OT,nroObra,fechaHora,direccion, id_Distrito, referencia, descripcion_OT, id_tipoTrabajo,id_estado , tipoTrabajo_OTOrigen }){
 
-    // //----- Datos Generales  -----  
+    // //----- Datos Generales  -----
     this.id_OTGlobal = id_OT;
     this.id_tipoOTGlobal = id_tipoTrabajo;
     this.nroObraParteDiario_Global = nroObra;
     this.fechaHora_Global = fechaHora;
     this.id_estadoOTGlobal = id_estado;
     this.tipoTrabajo_OTOrigenGlobal = tipoTrabajo_OTOrigen;
-  
+
     this.totalGlobal =0;
     this.totalGlobal14 =0;
     this.totalGlobal15 =0;
-  
+
     this.tituloModal = 'Tipo Trabajo No-Definido'
-  
+
     if (id_tipoTrabajo == 3 ||  id_tipoTrabajo == 4 ) {  // rotura
-      
+
       this.tituloModal = 'REGISTRO DE ROTURA O REPARACION'
       this.flagMedidas =true;
       this.get_medidasOT();
       this.get_desmonteOT();
-  
+
     }
     else if (id_tipoTrabajo == 5 ) {  // desmonte
-      
+
       this.tituloModal = 'REGISTRO DE DESMONTE'
       this.flagMedidas =false;
       this.medidasDetalle = [];
       this.get_desmonteOT();
-  
+
     }else{
       this.flagMedidas =false;
       this.medidasDetalle = [];
-      this.desmonteDetalle = [];      
+      this.desmonteDetalle = [];
     }
-        
+
     this.formParamsDatosG.patchValue({"direccion": direccion , "idDistrito": id_Distrito, "referencia": referencia, "descripcionTrabajo": descripcion_OT , "idEstado": id_estado });
     this.selectedTabControlDetalle2 = this.tabControlDetalle2[0];
-  
-    setTimeout(()=>{ // 
+
+    setTimeout(()=>{ //
       $('#modal_VisorOT').modal('show');
     },0);
   }
-  
+
   asignacionAutomatica(){
     this.alertasService.Swal_Question('Sistemas', 'Esta seguro de realizar la Asignacion Automatica ?')
     .then((result)=>{
@@ -1378,28 +1377,28 @@ export class OrdenTrabajoComponent implements OnInit  {
 
         if (this.formParamsFiltro.value.idServicio == '' || this.formParamsFiltro.value.idServicio == 0) {
           this.alertasService.Swal_alert('error','Por favor seleccione el servicio');
-          return 
+          return
         }
-        
+
         if (this.formParamsFiltro.value.idTipoOT == '' || this.formParamsFiltro.value.idTipoOT == 0) {
           this.alertasService.Swal_alert('error','Por favor seleccione el Tipo de Orden Trabajo');
-          return 
-        }  
-    
+          return
+        }
+
         // if (this.formParamsFiltro.value.idDistrito == '' || this.formParamsFiltro.value.idDistrito == 0) {
         //   this.alertasService.Swal_alert('error','Por favor seleccione un Distrito');
-        //   return 
+        //   return
         // }
-    
+
         // if (this.formParamsFiltro.value.idProveedor == '' || this.formParamsFiltro.value.idProveedor == 0) {
         //   this.alertasService.Swal_alert('error','Por favor seleccione un Proveedor');
-        //   return 
+        //   return
         // }
-    
+
         if (this.formParamsFiltro.value.idEstado == '' || this.formParamsFiltro.value.idEstado == 0) {
           this.alertasService.Swal_alert('error','Por favor seleccione un Estado');
-          return 
-        } 
+          return
+        }
 
         Swal.fire({
           icon: 'info', allowOutsideClick: false, allowEscapeKey: false, text: 'Espere por favor'
@@ -1408,16 +1407,16 @@ export class OrdenTrabajoComponent implements OnInit  {
         this.ordenTrabajoService.set_asignacionAutomatica(this.formParamsFiltro.value, this.idUserGlobal).subscribe((res:RespuestaServer)=>{
           Swal.close();
           console.log(res)
-          if (res.ok) { 
+          if (res.ok) {
              this.alertasService.Swal_Success("Proceso realizado correctamente..")
-               //-----listando la informacion  
-             this.mostrarInformacion();  
+               //-----listando la informacion
+             this.mostrarInformacion();
           }else{
             this.alertasService.Swal_alert('error', JSON.stringify(res.data));
             alert(JSON.stringify(res.data));
           }
         })
- 
+
       }
     })
   }
@@ -1426,85 +1425,85 @@ export class OrdenTrabajoComponent implements OnInit  {
 
     if (this.formParamsFiltro.value.idServicio == '' || this.formParamsFiltro.value.idServicio == 0) {
       this.alertasService.Swal_alert('error','Por favor seleccione el servicio');
-      return 
+      return
     }
-    
+
     if (this.formParamsFiltro.value.idTipoOT == '' || this.formParamsFiltro.value.idTipoOT == 0) {
       this.alertasService.Swal_alert('error','Por favor seleccione el Tipo de Orden Trabajo');
-      return 
-    }  
+      return
+    }
 
     // if (this.formParamsFiltro.value.idDistrito == '' || this.formParamsFiltro.value.idDistrito == 0) {
     //   this.alertasService.Swal_alert('error','Por favor seleccione un Distrito');
-    //   return 
+    //   return
     // }
 
     // if (this.formParamsFiltro.value.idProveedor == '' || this.formParamsFiltro.value.idProveedor == 0) {
     //   this.alertasService.Swal_alert('error','Por favor seleccione un Proveedor');
-    //   return 
+    //   return
     // }
 
     if (this.formParamsFiltro.value.idEstado == '' || this.formParamsFiltro.value.idEstado == 0) {
       this.alertasService.Swal_alert('error','Por favor seleccione un Estado');
-      return 
-    } 
-  
+      return
+    }
+
     this.spinner.show();
     this.ordenTrabajoService.get_descargarOT_general(this.formParamsFiltro.value, this.idUserGlobal)
-        .subscribe((res:RespuestaServer)=>{            
+        .subscribe((res:RespuestaServer)=>{
             this.spinner.hide();
             console.log(res.data);
-            if (res.ok==true) {        
+            if (res.ok==true) {
               window.open(String(res.data),'_blank');
             }else{
               this.alertasService.Swal_alert('error', JSON.stringify(res.data));
               alert(JSON.stringify(res.data));
             }
     })
-  }  
-
-  cerrarModal_prioridad(){
-    $('#modal_prioridad').modal('hide');    
   }
 
-  OpenModal_Prioridad(){  
+  cerrarModal_prioridad(){
+    $('#modal_prioridad').modal('hide');
+  }
+
+  OpenModal_Prioridad(){
       if (this.validacionCheckMarcado()==false){
         return;
-      }  
+      }
       this.idPrioridad = 0;
       this.observacionPrioridad = "";
       setTimeout(() => {
           $('#modal_prioridad').modal('show');
        }, 0);
   }
- 
- grabarPrioridad(){ 
+
+ grabarPrioridad(){
   if (this.idPrioridad ==0) {
     this.alertasService.Swal_alert('error','Por favor seleccione el la Prioridad');
     return;
   }
   const otMarcadas =  this.funcionGlobalServices.obtenerCheck_IdPrincipal(this.ordenTrabajoCab, 'id_OT');
-  console.log(otMarcadas)  
+  console.log(otMarcadas)
   this.spinner.show();
   this.ordenTrabajoService.set_envioPrioridades( otMarcadas.join(), this.idPrioridad, this.observacionPrioridad , this.idUserGlobal)
-      .subscribe((res:RespuestaServer)=>{            
+      .subscribe((res:RespuestaServer)=>{
           this.spinner.hide();
-          if (res.ok==true) {   
+          if (res.ok==true) {
             this.alertasService.Swal_Success("Proceso realizado correctamente..")
             this.cerrarModal_prioridad();
 
-              ////-- notificaciones Socket para el movil----    
+              ////-- notificaciones Socket para el movil----
                   const listOTSocket = this.ordenTrabajoCab.filter((ot)=>ot.checkeado == true).map((detalleOT)=>{
-                    return { 
-                             idEmpresa : detalleOT.idEmpresa , 
-                             idCuadrilla : detalleOT.idJefeCuadrilla, 
-                             cantidadOT :  1 , 
-                             idServicio : this.formParamsFiltro.value.idServicio , 
-                             idTipoOT : this.formParamsFiltro.value.idTipoOT , 
+                    return {
+                             idEmpresa : detalleOT.idEmpresa ,
+                             idCuadrilla : detalleOT.idJefeCuadrilla,
+                             cantidadOT :  1 ,
+                             idServicio : this.formParamsFiltro.value.idServicio ,
+                             idTipoOT : this.formParamsFiltro.value.idTipoOT ,
                              mensaje : `El Nro de Orden ${detalleOT.nroObra} se tiene que Atender con Urgencia ..!`,
                              titulo : 'Alerta de Prioridad de OT - Dominion'
-                           } 
-                   })      
+                           }
+                   })
                   this.websocketService.NotificacionOT_WebSocket(listOTSocket)
                   .then( (res:any) =>{
                     if (res.ok==true) {
@@ -1516,7 +1515,7 @@ export class OrdenTrabajoComponent implements OnInit  {
                   }).catch((error)=>{
                     this.alertasService.Swal_alert('Error Socket', JSON.stringify(error));
                     alert(JSON.stringify(error));
-                  })                 
+                  })
               ////-- Fin de notificaciones Socket para el movil----
 
           }else{
@@ -1524,19 +1523,19 @@ export class OrdenTrabajoComponent implements OnInit  {
             alert(JSON.stringify(res.data));
           }
   })
-  
+
  }
 
  modificarNroOrden(){
 
   // validando solo por perfil Coordinador de Servicios
-  if (this.idPerfil_global != 2) { 
-    return 
+  if (this.idPerfil_global != 2) {
+    return
   }
 
   if (this.nroObraParteDiario_Global == '' || this.nroObraParteDiario_Global == null ) {
     this.alertasService.Swal_alert('error','Por favor ingrese el Nro Orden');
-    return 
+    return
   }
 
    this.alertasService.Swal_Question('Sistemas', 'Esta seguro de modificar ?')
@@ -1546,25 +1545,25 @@ export class OrdenTrabajoComponent implements OnInit  {
        Swal.fire({  icon: 'info', allowOutsideClick: false, allowEscapeKey: false, text: 'Espere por favor'  })
        Swal.showLoading();
        this.ordenTrabajoService.set_modificar_nroObra( this.id_OTGlobal, this.nroObraParteDiario_Global, this.idUserGlobal  ).subscribe((res:RespuestaServer)=>{
-         Swal.close();        
-         if (res.ok ==true) { 
-           
+         Swal.close();
+         if (res.ok ==true) {
+
            for (const user of this.ordenTrabajoCab) {
-             if (user.id_OT == this.id_OTGlobal ) {           
+             if (user.id_OT == this.id_OTGlobal ) {
                  user.nroObra = this.nroObraParteDiario_Global;
                  break;
              }
            }
-           this.alertasService.Swal_Success('Modificacion realizada correctamente..')  
+           this.alertasService.Swal_Success('Modificacion realizada correctamente..')
 
          }else{
            this.alertasService.Swal_alert('error', JSON.stringify(res.data));
            alert(JSON.stringify(res.data));
          }
        })
-        
+
      }
-   }) 
+   })
 
 
  }

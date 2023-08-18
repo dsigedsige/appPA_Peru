@@ -6,7 +6,7 @@
 
         <a id="id_link" href="" download style="display:none">link</a>
 
-        <form [formGroup]="formParamsFiltro">
+        <form [formGroup]="formParamsFiltro"> 
             <div class="row" style=" margin-top: -15px;">
                 <div class="col-md-3">
                     <label for=""> Servicio</label>
@@ -194,7 +194,7 @@
                                 </td>
                                 <td class="text-right">{{item.totalVolumen | number}}</td>
                                 <td class="text-right">{{item.totalDesmonte | number}}</td>
-                                <td class="text-right">{{item.totalDesmonteRecoger | number}}</td>                                
+                                <td class="text-right">{{item.totalDesmonteRecoger | number}}</td>
                                 <td>{{item.fechaAprobacion}}</td>
                                 <td class="text-right">{{item.diasVencimiento }}</td>
                                 <td>{{item.prioridad}}</td>
@@ -356,7 +356,7 @@
                                             <div class="row" *ngIf="id_estadoOTGlobal != 6 ? false: true ">
                                                 <div class="col-md-12 text-center">
                                                     <button class="btn  btn-sm  btn-primary" (click)="Aprobar_OT()" title="Aprobar la Orden de Trabajo">
-                                                        <i class="fas fa-save"> Aprobar OT</i> 
+                                                        <i class="fas fa-save"> Aprobar OT</i>
                                                     </button>
                                                 </div>
                                             </div>
@@ -393,13 +393,13 @@
                                                             <td class="text-right">{{item.ancho | number }}</td>
                                                             <td class="text-right">{{item.espesor | number}}</td>
                                                             <td class="text-right">{{item.total | number }}</td>
-                                                            <td class="text-center">                            
+                                                            <td class="text-center">
                                                                 <img src="./assets/img/galeria2.png"   tooltip="Ver Fotos " (click)="abrirModal_visorFotos(item)"  >
                                                             </td>
-                                                            <td class="text-center">                                                               
+                                                            <td class="text-center">
                                                                 <img src="./assets/img/editar.png"  *ngIf="idPerfil_global == 2 "  tooltip="Editar" (click)="abrirModal_editar(item, 'M')"  >
                                                             </td>
-                                                            <td class="text-center">                                                                
+                                                            <td class="text-center">
                                                                 <img src="./assets/img/anular.png" *ngIf="idPerfil_global == 2 " tooltip="Eliminar" (click)="eliminarMedidas(item, 'M' )"  >
                                                             </td>
                                                         </tr>
@@ -448,13 +448,13 @@
                                                             <td class="text-right">{{item.ancho | number }}</td>
                                                             <td class="text-right">{{item.espesor | number}}</td>
                                                             <td class="text-right">{{item.total | number }}</td>
-                                                            <td class="text-center">                            
+                                                            <td class="text-center">
                                                                 <img src="./assets/img/galeria2.png"   tooltip="Ver Fotos " (click)="abrirModal_visorFotos(item)"  >
                                                             </td>
-                                                            <td class="text-center">                                                               
+                                                            <td class="text-center">
                                                                 <img src="./assets/img/editar.png"  *ngIf="idPerfil_global == 2 "  tooltip="Editar" (click)="abrirModal_editar(item, 'D')"  >
                                                             </td>
-                                                            <td class="text-center">                                                                
+                                                            <td class="text-center">
                                                                 <img src="./assets/img/anular.png" *ngIf="idPerfil_global == 2 " tooltip="Eliminar" (click)="eliminarDesmonte(item, 'D' )"  >
                                                             </td>
 
@@ -509,7 +509,7 @@
                                                 </div>
                                             </form>
 
-                                            
+
                                             <br>
                                             <div class="row"  >
                                                 <div class="col-md-12 text-center">
@@ -518,7 +518,7 @@
                                                     </button>
                                                 </div>
                                             </div>
- 
+
 
                                         </div>
                                     </div>
@@ -558,13 +558,13 @@
                 </div>
             </div>
             <div class="modal-body">
- 
+
 
                 <div class="row">
                     <div class="col-md-12">
                         <div class="row" *ngIf="this.detalleOT">
                             <div class="col-xs-6 col-md-3">
-                                <label> 
+                                <label>
                                     {{ (this.id_tipoOTGlobal == 3 || this.id_tipoOTGlobal == 4 )? 'TIPO MATERIAL :  ' : 'TIPO DESMONTE : '  }} {{this.detalleOT.tipoMaterial}}
                                 </label>
                             </div>
@@ -731,7 +731,7 @@
     </div>
 </div>
 
- 
+
 <div class="modal" id="modal_adjuntar" tabindex="-1">
     <div class="modal-dialog ">
         <div class="modal-content" style="border: 3px solid #07f7ff;">
@@ -750,7 +750,7 @@
             </div>
             <div class="modal-body">
 
-                <form [formGroup]="formParamsFile">                    
+                <form [formGroup]="formParamsFile">
                     <div class="row">
                         <div class="col-md-12">
                              <label for=""> {{labelAdjuntar}} </label>
@@ -773,7 +773,7 @@
                     </div>
                 </div>
 
-                
+
                 <div class="row">
                     <div class="col-md-12 text-center">
                         <button class="btn btn-success" (click)="upload_adjuntar()" title="Guardar la informacion"> <i class="fas fa-save">  {{ (labelAdjuntar == 'Adjuntar Archivo') ? 'Cargar' : 'Actualizar'  }} </i></button>
@@ -782,13 +782,13 @@
 
                 <hr>
 
-                <div class="row" *ngIf="nombreArchivoAdjuntar">   
+                <div class="row" *ngIf="nombreArchivoAdjuntar">
                     <div class="col-md-12">
-                       <label for=""  > Nombre de Archivo cargado :</label>  
+                       <label for=""  > Nombre de Archivo cargado :</label>
                        <div class="text-center">
-                        <p class="labelTextFile"> {{nombreArchivoAdjuntar}}  </p> 
+                        <p class="labelTextFile"> {{nombreArchivoAdjuntar}}  </p>
                         <i class="fas fa-arrow-alt-circle-down puntero" title="Descargar Archivo Cargado" style="color: red; font-size: 40px;" (click)="verArchivo()"> </i>
- 
+
                        </div>
                     </div>
                 </div>

@@ -1,4 +1,4 @@
-﻿// La generación de código T4 está habilitada para el modelo 'E:\Julio\Trabajo\Sistema_3R_Dominion\WebApi_3R_Dominion\Datos\3R_DominionModel.edmx'. 
+﻿// La generación de código T4 está habilitada para el modelo 'D:\Proyectos\appPA_Peru\WebApi_PA_Peru\Datos\3R_DominionModel.edmx'. 
 // Para habilitar la generación de código heredada, cambie el valor de la propiedad del diseñador 'Estrategia de generación de código'
 // por 'ObjectContext heredado'. Esta propiedad está disponible en la ventana Propiedades cuando se abre
 // el modelo en el diseñador.
