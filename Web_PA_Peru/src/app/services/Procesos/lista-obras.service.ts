@@ -72,6 +72,29 @@ export class ListaObrasService {
   }
 
 
+
+  insertObraFotos(GesObraCodigo:string,LatitudFoto:string,LongitudFoto:string,NombreFoto:any, Usuario : any){
+    debugger;
+    let parametros = new HttpParams();
+    parametros = parametros.append('GesObraCodigo',GesObraCodigo.toString());
+    parametros = parametros.append('LatitudFoto',LatitudFoto.toString());
+    parametros = parametros.append('LongitudFoto',LongitudFoto.toString());
+    parametros = parametros.append('NombreFoto',NombreFoto.toString());
+    parametros = parametros.append('Usuario',Usuario.toString());
+    return this.http.get( this.URL + 'ListaObras/insertFotosObras' , {params: parametros})
+  }
+
+
+
+  upload_adjuntarArchivoObras(file:any, GesObraCodigo:string, LatitudFoto : string,LongitudFoto:string,Usuario:string) {
+    const formData = new FormData();
+    formData.append('file', file);
+    const filtro = GesObraCodigo + '|' + LatitudFoto + '|' + LongitudFoto + '|' + Usuario;
+    return this.http.post(this.URL + 'ListaObras/PostAdjuntarObraFoto_v2?filtros=' + filtro, formData);
+
+  }
+
+
 }
 
 

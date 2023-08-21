@@ -191,6 +191,7 @@ export class ListaObrasComponent implements OnInit {
 
 
    onFileChange(event:any) {
+    debugger;
     var filesTemporal = event.target.files; //FileList object
       var fileE:InputFileI [] = [];
       for (var i = 0; i < event.target.files.length; i++) { //for multiple files
@@ -202,7 +203,47 @@ export class ListaObrasComponent implements OnInit {
         })
       }
        this.files = fileE;
+       //this.insert_obraFotos();
    }
+
+
+   insert_obraFotos(){
+    debugger;
+      this.listObrasService.insertObraFotos(this.vGes_Obra_Codigo,'-11.9919828',
+          '-77.0051692',this.files[0].namefile,'sa').subscribe((res:RespuestaServer)=>{
+
+      },(error)=>{
+        console.log(error);
+        alert(error);
+      })
+   }
+
+
+
+   upload_adjuntar() {
+    if ( this.files.length ==0){
+      this.alertasService.Swal_alert('error','Por favor seleccione el archivo');
+      return;
+    }
+    Swal.fire({
+      icon: 'info',
+      allowOutsideClick: false,
+      allowEscapeKey: false,
+      text: 'Espere por favor'
+    })
+    Swal.showLoading();
+    this.listObrasService.upload_adjuntarArchivoObras( this.files[0].file , this.vGes_Obra_Codigo, '-11.9919828','-77.0051692','sa' ).subscribe(
+      (res : any) =>{
+      Swal.close();
+
+        },(err) => {
+        Swal.close();
+        this.alertasService.Swal_alert('error',JSON.stringify(err));
+        }
+    )
+
+   }
+
 
 
   descargarFotosObras(pantalla:string){

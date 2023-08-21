@@ -207,12 +207,11 @@ namespace Negocio.Procesos
         }
 
 
-        public string set_insert_obrasFoto(ObraEjecucion obraEjecucion)
+        public string set_insert_obrasFoto(string GesObraCodigo,string LatitudFoto,string LongitudFoto,string NombreFoto, string Usuario)
         {
             string resultado = "";            
             try
-            {
-               
+            {               
                 using (SqlConnection cn = new SqlConnection(bdConexion.cadenaBDcx()))
                 {
                     cn.Open();
@@ -220,26 +219,26 @@ namespace Negocio.Procesos
                     {
                         cmd.CommandTimeout = 0;
                         cmd.CommandType = CommandType.StoredProcedure;
-                        cmd.Parameters.Add("@GesObraCodigo", SqlDbType.Int).Value = obraEjecucion.GesObraCodigo;
-                        cmd.Parameters.Add("@LatitudFoto", SqlDbType.VarChar).Value = obraEjecucion.GesObraCodigo;
-                        cmd.Parameters.Add("@LongitudFoto", SqlDbType.Int).Value = obraEjecucion.GesObraCodigo;
-                        cmd.Parameters.Add("@NombreFoto", SqlDbType.VarChar).Value = obraEjecucion.GesObraCodigo;
-                        cmd.Parameters.Add("@Usuario", SqlDbType.Int).Value = obraEjecucion.GesObraCodigo;
-                        cmd.Parameters.Add("@Usuario", SqlDbType.VarChar).Value = obraEjecucion.GesObraCodigo;
 
+                        SqlParameter outParam = new SqlParameter();
+                        outParam.DbType = System.Data.DbType.Int32;
+                        outParam.ParameterName = "@IdObraEjecucion";
+                        outParam.Direction = System.Data.ParameterDirection.Output;
+                        cmd.Parameters.Add(outParam);
+                        cmd.Parameters.Add("@GesObraCodigo", SqlDbType.VarChar).Value = GesObraCodigo;
+                        cmd.Parameters.Add("@LatitudFoto", SqlDbType.VarChar).Value = LatitudFoto;
+                        cmd.Parameters.Add("@LongitudFoto", SqlDbType.VarChar).Value = LongitudFoto;
+                        cmd.Parameters.Add("@NombreFoto", SqlDbType.VarChar).Value = NombreFoto;
+                        cmd.Parameters.Add("@Usuario", SqlDbType.VarChar).Value = Usuario;                        
                         cmd.ExecuteNonQuery();
-                        resultado = "OK";      
+                        resultado = ((int)outParam.Value).ToString();
+                        //resultado = "OK";      
                     }
                 }
             }
             catch (Exception e)
             {
                 resultado = e.Message;
-
-
-
-
-
             }
             return resultado;
         }
