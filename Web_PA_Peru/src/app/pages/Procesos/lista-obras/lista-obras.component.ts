@@ -207,16 +207,16 @@ export class ListaObrasComponent implements OnInit {
    }
 
 
-   insert_obraFotos(){
-    debugger;
-      this.listObrasService.insertObraFotos(this.vGes_Obra_Codigo,'-11.9919828',
-          '-77.0051692',this.files[0].namefile,'sa').subscribe((res:RespuestaServer)=>{
+  //  insert_obraFotos(){
+  //   debugger;
+  //     this.listObrasService.insertObraFotos(this.vGes_Obra_Codigo,'-11.9919828',
+  //         '-77.0051692',this.files[0].namefile,'sa').subscribe((res:RespuestaServer)=>{
 
-      },(error)=>{
-        console.log(error);
-        alert(error);
-      })
-   }
+  //     },(error)=>{
+  //       console.log(error);
+  //       alert(error);
+  //     })
+  //  }
 
 
 

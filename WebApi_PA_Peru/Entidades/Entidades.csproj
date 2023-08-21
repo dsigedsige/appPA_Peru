@@ -54,6 +54,7 @@
     <Compile Include="Acceso\Login.cs" />
     <Compile Include="Mantenimientos\ConfiguracionZonas_E.cs" />
     <Compile Include="Mantenimientos\PrecioMaterial_E.cs" />
+    <Compile Include="Procesos\Documents.cs" />
     <Compile Include="Procesos\ObraEjecucion.cs" />
     <Compile Include="Procesos\OrdenTrabajo_E.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

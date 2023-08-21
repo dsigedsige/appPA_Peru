@@ -211,7 +211,7 @@ namespace WebApi_PA_Peru.Controllers.Proceso
             string nombreFile = "";
             string nombreFileServer = "";
             string path = "";
-            string url = ConfigurationManager.AppSettings["imagen"];
+           
 
             try
             {
@@ -224,48 +224,35 @@ namespace WebApi_PA_Peru.Controllers.Proceso
                 string LongitudFoto = parametros[2].ToString();
                 string Usuario = parametros[3].ToString();
 
-                nombreFile = file.FileName;             
-                nombreFileServer = nombreFile;
+                nombreFile = file.FileName;
+
+
+                //-----generando clave unica---
+                DateTime currentDate = DateTime.Now;
+                string formattedDate = currentDate.ToString("ddMMyyyy");
+                string formattedTime = currentDate.ToString("HHmmssfff");
+
+                nombreFileServer = GesObraCodigo + "_" + formattedDate + "_" + formattedTime + extension;
+
                 //---almacenando la imagen--
-                path = System.Web.Hosting.HostingEnvironment.MapPath("~/Imagen/" + nombreFileServer);
+                path = System.Web.Hosting.HostingEnvironment.MapPath("~/Archivos/Fotos/" + nombreFileServer);
                 file.SaveAs(path);
 
                 //------suspendemos el hilo, y esperamos ..
                 System.Threading.Thread.Sleep(1000);
 
-                using (var client = new HttpClient())
+                if (File.Exists(path))
                 {
-                    string apiUrl = "http://209.45.50.65/production/WebApi_PA_Peru/Archivos/Fotos/";
-                    apiUrl += nombreFileServer;
+                    ListaObras_BL obj_negocioObra = new ListaObras_BL();
+                    obj_negocioObra.set_insert_obrasFoto(GesObraCodigo, LatitudFoto, LongitudFoto, nombreFileServer, Usuario);
 
-                    using (var content = new MultipartFormDataContent())
-                    {
-                        content.Add(new StreamContent(file.InputStream), "file", nombreFile);
-
-                        var response = client.PostAsync(apiUrl, content).Result;
-
-                        if (response.IsSuccessStatusCode)
-                        {
-                            object respuesta = new
-                            {
-                                url = url + nombreFileServer,
-                                nombreFile = nombreFile
-                            };
-
-                            ListaObras_BL obj_negocioObra = new ListaObras_BL();
-                            obj_negocioObra.set_insert_obrasFoto(GesObraCodigo, LatitudFoto, LongitudFoto, nombreFile, Usuario);
-
-
-                            res.ok = true;
-                            res.data = respuesta;
-                        }
-                        else
-                        {
-                            res.ok = false;
-                            res.data = "No se pudo guardar el archivo en el servidor remoto.";
-                        }
-                    }
+                    res.ok = true;
+                    res.data = "Se grabo";
                 }
+                else {
+                    res.ok = false;
+                    res.data = "No se pudo grabar la imagen en el servidor..";
+                }          
             }
             catch (Exception ex)
             {

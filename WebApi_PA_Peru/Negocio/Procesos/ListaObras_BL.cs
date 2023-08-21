@@ -228,17 +228,16 @@ namespace Negocio.Procesos
                         cmd.Parameters.Add("@GesObraCodigo", SqlDbType.VarChar).Value = GesObraCodigo;
                         cmd.Parameters.Add("@LatitudFoto", SqlDbType.VarChar).Value = LatitudFoto;
                         cmd.Parameters.Add("@LongitudFoto", SqlDbType.VarChar).Value = LongitudFoto;
-                        cmd.Parameters.Add("@NombreFoto", SqlDbType.VarChar).Value = NombreFoto;
+                        cmd.Parameters.Add("@NombreFoto", SqlDbType.VarChar).Value = NombreFoto;                        
                         cmd.Parameters.Add("@Usuario", SqlDbType.VarChar).Value = Usuario;                        
                         cmd.ExecuteNonQuery();
-                        resultado = ((int)outParam.Value).ToString();
-                        //resultado = "OK";      
+                        resultado = "OK";      
                     }
                 }
             }
-            catch (Exception e)
+            catch (Exception)
             {
-                resultado = e.Message;
+                throw;
             }
             return resultado;
         }
