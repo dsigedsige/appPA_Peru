@@ -221,6 +221,7 @@
     <Compile Include="Controllers\Proceso\ListaObrasController.cs" />
     <Compile Include="Controllers\Proceso\OrdenTrabajoController.cs" />
     <Compile Include="Controllers\Reporte\ReportesController.cs" />
+    <Compile Include="Controllers\SAP\GuiaController.cs" />
     <Compile Include="Controllers\SAP\MigrationController.cs" />
     <Compile Include="Controllers\upload\UploadsController.cs" />
     <Compile Include="Controllers\ValuesController.cs" />

@@ -21,6 +21,7 @@ import { ReporteAnalisisComponent } from './pages/Reportes/reporte-analisis/repo
 import { DetalladoContratistaComponent } from './pages/Reportes/detallado-contratista/detallado-contratista.component';
 import { PrecioEmpresaComponent } from './pages/Mantenimientos/precio-empresa/precio-empresa.component';
 import { ListaObrasComponent } from './pages/Procesos/lista-obras/lista-obras.component';
+import { GuiaSapComponent } from './pages/procesos/guia-sap/guia-sap.component';
 
 
 const APP_ROUTERS: Routes = [
@@ -54,6 +55,7 @@ const APP_ROUTERS: Routes = [
     { path: 'mantenimiento-precio-empresa', component: PrecioEmpresaComponent },
 
     { path: 'lista-obras', component: ListaObrasComponent },
+    { path: 'lista-guia', component: GuiaSapComponent },
 
     { path: '', pathMatch:'full', redirectTo:'inicio' },
     { path: '**', pathMatch:'full', redirectTo:'inicio' },

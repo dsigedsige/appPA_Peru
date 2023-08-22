@@ -1,0 +1,57 @@
+
+<div class="card border-left-warning  shadow   ">
+  <div class="card-header">
+      <h5 class="headerTitle"> Enviar Guias al SAP </h5>
+  </div>
+  <div class="card-body">
+    <form [formGroup]="formParamsFiltro">
+      <div class="row" style=" margin-top: -15px;">
+        <div class="col-md-3">
+          <label for="">Movimiento</label>
+          <select  class="form-control comboBox" formControlName="idMovimiento">
+              <option value="0"> [ --TODOS-- ]</option>
+          </select>
+        </div>
+        <div class="col-md-2">
+          <label class="control-label">Fechas de Emision </label>
+          <div class="input-group">
+              <input class="form-control" #fecha_emision="bsDatepicker" bsDatepicker formControlName="fecha_emision" [bsConfig]="{ dateInputFormat: 'DD/MM/YYYY', containerClass: 'theme-dark-blue'  }">
+          </div>
+        </div>
+
+        <div class="col-md-1.5" style="margin-right: 5px;">
+          <div class="mt-4">
+              <button class="btn btn-primary  btn-block"  style="font-size: 13px;">  <i class="fas fa-search"> Actualizar</i> </button>
+          </div>
+        </div>
+        <div class="col-md-1.5">
+          <div class="mt-4">
+              <button class="btn btn-primary  btn-info"  style="font-size: 13px;">  <i class="fas fa-save"> Eviar al SAP</i> </button>
+          </div>
+        </div>
+      </div>
+    </form>
+    <div class="search-results tableFixHead" style="margin-top: 5px;">
+      <table class="table  table-hover table-sm">
+          <thead class="theadTable">
+              <tr style="height: 40px !important;">
+                  <th scope="col">#</th>
+                  <th scope="col">Nro.Guia</th>
+                  <th scope="col">Fecha de Emision</th>
+                  <th scope="col">Resultado SAP</th>
+                  <th scope="col">Almacen</th>
+                  <th scope="col">Obra/LCL</th>
+                  <th scope="col"></th>
+              </tr>
+          </thead>
+          <tbody>
+              <tr>
+              </tr>
+          </tbody>
+      </table>
+  </div>
+  </div>
+</div>
+
+
+
