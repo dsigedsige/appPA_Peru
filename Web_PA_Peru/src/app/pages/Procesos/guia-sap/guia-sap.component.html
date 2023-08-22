@@ -10,6 +10,7 @@
           <label for="">Movimiento</label>
           <select  class="form-control comboBox" formControlName="idMovimiento">
               <option value="0"> [ --TODOS-- ]</option>
+              <option [value]="item.Alm_Movi_Codigo" *ngFor="let item of movimiento">{{item.Alm_Movi_Descripcion}}</option>
           </select>
         </div>
         <div class="col-md-2">
@@ -21,12 +22,12 @@
 
         <div class="col-md-1.5" style="margin-right: 5px;">
           <div class="mt-4">
-              <button class="btn btn-primary  btn-block"  style="font-size: 13px;">  <i class="fas fa-search"> Actualizar</i> </button>
+              <button class="btn btn-primary  btn-block"  style="font-size: 13px;">  <i class="fas fa-search" (click)="listarGuias()"> Actualizar</i> </button>
           </div>
         </div>
         <div class="col-md-1.5">
           <div class="mt-4">
-              <button class="btn btn-primary  btn-info"  style="font-size: 13px;">  <i class="fas fa-save"> Eviar al SAP</i> </button>
+              <button class="btn btn-primary  btn-info"  style="font-size: 13px;">  <i class="fas fa-save" (click)="enviar_guiasSAP()"> Eviar al SAP</i> </button>
           </div>
         </div>
       </div>
@@ -45,7 +46,13 @@
               </tr>
           </thead>
           <tbody>
-              <tr>
+              <tr *ngFor="let item of listGuia; index as i">
+                <td>{{i+1}}</td>
+                <td>{{item.Series}}</td>
+                <td>{{item.DocDate | date:'dd/MM/yyyy'}}</td>
+                <td>{{item.RESULTADO_SAP}}</td>
+                <td>{{item.U_EXP_NOMBRESN}}</td>
+                <td>{{item.U_EXX_FE_SN}}</td>
               </tr>
           </tbody>
       </table>
