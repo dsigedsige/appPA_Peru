@@ -60,6 +60,28 @@ namespace WebApi_PA_Peru.Controllers.SAP
             return resul;
         }
 
+        [HttpGet]
+        [Route("api/Guia/GetDetalleGuias")]
+        public object GetDetalleGuias(string guia)
+        {
+            Resultado res = new Resultado();
+            GuiaBL obj_negocio = new GuiaBL();
+            object resul = null;
+            try
+            {
+                resul = obj_negocio.get_DetalleGuias(guia);
+            }
+            catch (Exception ex)
+            {
+                res.ok = false;
+                res.data = ex.Message;
+                res.totalpage = 0;
+                resul = res;
+            }
+            return resul;
+        }
+
+
 
         [HttpPost]
         [Route("api/Guia/setInsertGuias")]

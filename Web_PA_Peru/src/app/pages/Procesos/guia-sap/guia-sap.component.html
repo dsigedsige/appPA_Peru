@@ -48,11 +48,25 @@
           <tbody>
               <tr *ngFor="let item of listGuia; index as i">
                 <td>{{i+1}}</td>
-                <td>{{item.Series}}</td>
-                <td>{{item.DocDate | date:'dd/MM/yyyy'}}</td>
+                <td>{{item.NroGuia}}</td>
+                <td>{{item.FechaEmision | date:'dd/MM/yyyy'}}</td>
                 <td>{{item.RESULTADO_SAP}}</td>
-                <td>{{item.U_EXP_NOMBRESN}}</td>
-                <td>{{item.U_EXX_FE_SN}}</td>
+                <td>{{item.Almacen}}</td>
+                <td>{{item.Ges_Obra_Codigo}}</td>
+                <!-- <td *ngIf="item.RESULTADO_SAP !='' || item.RESULTADO_SAP !='ok' ">
+                  <button class="btn btn-link  btn-sm" (click)="reenviar_guias(item)"> reenviar</button>
+                </td> -->
+
+                <td *ngIf="item.RESULTADO_SAP !== '' && item.RESULTADO_SAP !== 'ok'; else reenviarBlock">
+                  <button class="btn btn-link btn-sm" (click)="reenviar_guias(item)">reenviar</button>
+                </td>
+                <ng-template #reenviarBlock>
+                  <td *ngIf="item.RESULTADO_SAP === 'error'">
+                    <button class="btn btn-link btn-sm" (click)="reenviar_guias(item)">reenviar</button>
+                  </td>
+                  <td *ngIf="item.RESULTADO_SAP !== 'error'">
+                  </td>
+                </ng-template>
               </tr>
           </tbody>
       </table>

@@ -33,7 +33,15 @@ export class GuiaSapService {
     return this.http.get( this.URL + 'Guia/GetGuias' , {params: parametros})
   }
 
-  
+
+  get_listarDetalleGuias( guia:string){
+    let parametros = new HttpParams();
+    parametros = parametros.append('guia', guia);
+    return this.http.get( this.URL + 'Guia/GetDetalleGuias' , {params: parametros})
+  }
+
+
+
   insertGuiaSap(model:GuiaSap) {
     return this.http.post(`${this.URL}/Guia/setInsertGuias`, model);
   }
