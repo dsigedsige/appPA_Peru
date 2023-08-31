@@ -48,11 +48,11 @@
           <tbody>
               <tr *ngFor="let item of listGuia; index as i">
                 <td>{{i+1}}</td>
-                <td>{{item.NroGuia}}</td>
-                <td>{{item.FechaEmision | date:'dd/MM/yyyy'}}</td>
+                <td>{{item.Reference2}}</td>
+                <td>{{item.DocDate}}</td>
                 <td>{{item.RESULTADO_SAP}}</td>
-                <td>{{item.Almacen}}</td>
-                <td>{{item.Ges_Obra_Codigo}}</td>
+                <td>{{item.Comments}}</td>
+                <td>{{item.U_EXX_FE_SN}}</td>
                 <!-- <td *ngIf="item.RESULTADO_SAP !='' || item.RESULTADO_SAP !='ok' ">
                   <button class="btn btn-link  btn-sm" (click)="reenviar_guias(item)"> reenviar</button>
                 </td> -->

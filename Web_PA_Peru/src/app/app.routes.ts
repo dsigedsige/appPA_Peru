@@ -55,7 +55,7 @@ const APP_ROUTERS: Routes = [
     { path: 'mantenimiento-precio-empresa', component: PrecioEmpresaComponent },
 
     { path: 'lista-obras', component: ListaObrasComponent },
-    { path: 'lista-guia', component: GuiaSapComponent },
+    { path: 'proceso-envio-guia-sap', component: GuiaSapComponent },
 
     { path: '', pathMatch:'full', redirectTo:'inicio' },
     { path: '**', pathMatch:'full', redirectTo:'inicio' },

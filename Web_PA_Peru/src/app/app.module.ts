@@ -60,6 +60,7 @@ import { PrecioEmpresaComponent } from './pages/Mantenimientos/precio-empresa/pr
 import { TooltipModule } from 'ngx-bootstrap/tooltip';
 import { ListaObrasComponent } from './pages/Procesos/lista-obras/lista-obras.component';
 import { GuiaSapComponent } from './pages/procesos/guia-sap/guia-sap.component';
+import { LoginComponent } from './pages/login/login.component';
 
 const config: SocketIoConfig = { url: 'http://190.223.38.245:5000', options: {} };
 
@@ -91,7 +92,8 @@ const config: SocketIoConfig = { url: 'http://190.223.38.245:5000', options: {} 
     DetalladoContratistaComponent,
     PrecioEmpresaComponent,
     ListaObrasComponent,
-    GuiaSapComponent
+    GuiaSapComponent,
+    LoginComponent
   ],
   imports: [
     BrowserModule,

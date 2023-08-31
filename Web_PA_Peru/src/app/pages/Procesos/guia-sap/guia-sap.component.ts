@@ -84,7 +84,7 @@ export class GuiaSapComponent implements OnInit {
   try{
      for(let i = 0; i < this.listGuia.length; i++){
           try {
-            var listDetGuia = await this.guiaService.get_listarDetalleGuias(this.listGuia[i].NroGuia).toPromise();
+            var listDetGuia = await this.guiaService.get_listarDetalleGuias(this.listGuia[i].Reference2).toPromise();
             if (Array.isArray(listDetGuia)) {
               this.detalleGuia = listDetGuia;
             } else {

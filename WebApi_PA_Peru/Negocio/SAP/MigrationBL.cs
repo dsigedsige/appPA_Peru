@@ -112,7 +112,7 @@ namespace Negocio.SAP
                         command.Parameters.AddWithValue("@TipoCambio", objOrdenCompra.TipoCambio);
 
                         // Ejecutar el comando
-                        command.ExecuteNonQuery();
+                        command.ExecuteNonQuery();  
                     }
 
                     // Crear el comando para la inserción o actualización de la tabla DetalleCompras
@@ -120,7 +120,7 @@ namespace Negocio.SAP
                     using (SqlCommand commandDetalle = new SqlCommand("DSIGE_PROY_W_MIGRACION_SAP_INSERT_UPDATE_COMPRA_DET", cn))
                     {
                         commandDetalle.CommandTimeout = 0;
-                        commandDetalle.CommandType = CommandType.StoredProcedure;
+                        commandDetalle.CommandType = CommandType.StoredProcedure;    
                         // Agregar los parámetros necesarios al comando
                         commandDetalle.Parameters.AddWithValue("@Id_Compra", null);
                         commandDetalle.Parameters.AddWithValue("@Id_Compra_Det", null);
@@ -146,9 +146,9 @@ namespace Negocio.SAP
 
                 }
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                throw;
+                throw ex;
             }
         }
 

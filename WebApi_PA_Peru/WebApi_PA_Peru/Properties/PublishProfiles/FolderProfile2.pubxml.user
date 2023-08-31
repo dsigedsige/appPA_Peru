@@ -5,7 +5,7 @@ https://go.microsoft.com/fwlink/?LinkID=208121.
 <Project>
   <PropertyGroup>
     <_PublishTargetUrl>C:\inetpub\wwwroot\WebApi_PA_Peru</_PublishTargetUrl>
-    <History>False|2023-08-22T15:03:52.1284697Z;False|2023-08-22T09:58:31.6728442-05:00;False|2023-08-22T09:48:33.7036913-05:00;True|2023-08-16T15:10:25.4673811-05:00;True|2023-08-16T09:27:29.4292182-05:00;True|2023-08-15T18:24:28.6213237-05:00;True|2023-08-15T18:07:27.6552411-05:00;False|2023-08-15T18:00:52.7177288-05:00;False|2023-08-15T17:59:51.3807039-05:00;</History>
+    <History>True|2023-08-24T15:08:14.3569458Z;False|2023-08-22T10:03:52.1284697-05:00;False|2023-08-22T09:58:31.6728442-05:00;False|2023-08-22T09:48:33.7036913-05:00;True|2023-08-16T15:10:25.4673811-05:00;True|2023-08-16T09:27:29.4292182-05:00;True|2023-08-15T18:24:28.6213237-05:00;True|2023-08-15T18:07:27.6552411-05:00;False|2023-08-15T18:00:52.7177288-05:00;False|2023-08-15T17:59:51.3807039-05:00;</History>
     <LastFailureDetails />
   </PropertyGroup>
   <ItemGroup>
@@ -121,13 +121,13 @@ https://go.microsoft.com/fwlink/?LinkID=208121.
       <publishTime>08/15/2023 11:27:34</publishTime>
     </File>
     <File Include="bin/Entidades.dll">
-      <publishTime>08/15/2023 17:59:50</publishTime>
+      <publishTime>08/22/2023 09:48:32</publishTime>
     </File>
     <File Include="bin/Entidades.dll.config">
       <publishTime>08/15/2023 11:28:59</publishTime>
     </File>
     <File Include="bin/Entidades.pdb">
-      <publishTime>08/15/2023 17:59:50</publishTime>
+      <publishTime>08/22/2023 09:48:32</publishTime>
     </File>
     <File Include="bin/EntityFramework.dll">
       <publishTime>08/15/2023 11:27:34</publishTime>
@@ -190,10 +190,10 @@ https://go.microsoft.com/fwlink/?LinkID=208121.
       <publishTime>08/15/2023 11:27:35</publishTime>
     </File>
     <File Include="bin/Negocio.dll">
-      <publishTime>08/17/2023 12:51:00</publishTime>
+      <publishTime>08/24/2023 10:08:12</publishTime>
     </File>
     <File Include="bin/Negocio.pdb">
-      <publishTime>08/17/2023 12:51:00</publishTime>
+      <publishTime>08/24/2023 10:08:12</publishTime>
     </File>
     <File Include="bin/Newtonsoft.Json.dll">
       <publishTime>08/15/2023 11:27:35</publishTime>
@@ -385,10 +385,10 @@ https://go.microsoft.com/fwlink/?LinkID=208121.
       <publishTime>08/15/2023 11:27:35</publishTime>
     </File>
     <File Include="bin/WebApi_PA_Peru.dll">
-      <publishTime>08/17/2023 12:51:00</publishTime>
+      <publishTime>08/24/2023 10:08:13</publishTime>
     </File>
     <File Include="bin/WebApi_PA_Peru.pdb">
-      <publishTime>08/17/2023 12:51:00</publishTime>
+      <publishTime>08/24/2023 10:08:13</publishTime>
     </File>
     <File Include="bin/WebGrease.dll">
       <publishTime>08/15/2023 11:27:35</publishTime>
@@ -505,7 +505,7 @@ https://go.microsoft.com/fwlink/?LinkID=208121.
       <publishTime>08/15/2023 11:27:34</publishTime>
     </File>
     <File Include="Web.config">
-      <publishTime>08/15/2023 17:59:51</publishTime>
+      <publishTime>08/22/2023 09:48:33</publishTime>
     </File>
   </ItemGroup>
 </Project>
