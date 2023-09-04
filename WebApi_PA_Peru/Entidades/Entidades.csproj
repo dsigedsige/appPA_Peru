@@ -62,6 +62,7 @@
     <Compile Include="SAP\ArticuloSapE.cs" />
     <Compile Include="SAP\CompraSapE.cs" />
     <Compile Include="SAP\GuiaSap.cs" />
+    <Compile Include="SAP\PersonalSap_E.cs" />
     <Compile Include="SAP\ProveedorSapE.cs" />
   </ItemGroup>
   <ItemGroup>

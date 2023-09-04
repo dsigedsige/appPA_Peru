@@ -152,5 +152,39 @@ namespace Negocio.SAP
             }
         }
 
+        public void set_guardar_persona(PersonalSap_E objPersona)
+        {
+            try
+            {
+                using (SqlConnection cn = new SqlConnection(bdConexion.cadenaBDcx()))
+                {
+                    cn.Open();
+                    using (SqlCommand cmd = new SqlCommand("DSIGE_PROY_W_MIGRACION_SAP_INSERT_UPDATE_empleados", cn))
+                    {
+                        cmd.CommandTimeout = 0;
+                        cmd.CommandType = CommandType.StoredProcedure;
+
+                        cmd.Parameters.Add("@CodigoInterno", SqlDbType.VarChar).Value = objPersona.CodigoInterno;
+                        cmd.Parameters.Add("@Ges_Empl_Dni", SqlDbType.VarChar).Value = objPersona.Dni;
+                        cmd.Parameters.Add("@Ges_Empl_Apellidos", SqlDbType.VarChar).Value = objPersona.Apellidos;
+                        cmd.Parameters.Add("@Ges_Empl_Nombres", SqlDbType.VarChar).Value = objPersona.Nombres ;
+                        cmd.Parameters.Add("@Ges_Empl_Direccion", SqlDbType.VarChar).Value = objPersona.Direccion;
+
+                        cmd.Parameters.Add("@Ges_Empl_Telefono", SqlDbType.VarChar).Value = objPersona.Telefono;
+                        cmd.Parameters.Add("@Ges_Empl_FechaIngreso", SqlDbType.VarChar).Value = (object)objPersona.FechaIngreso ?? DBNull.Value;
+                        cmd.Parameters.Add("@Ges_Empl_FechaCese", SqlDbType.VarChar).Value = (object)objPersona.FechaCese ?? DBNull.Value;
+                        cmd.Parameters.Add("@Cargo", SqlDbType.VarChar).Value = objPersona.Cargo;
+                        cmd.Parameters.Add("@Estado", SqlDbType.VarChar).Value = objPersona.Estado; 
+
+                        cmd.ExecuteNonQuery();
+                    }
+                }
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+        }
+
     }
 }

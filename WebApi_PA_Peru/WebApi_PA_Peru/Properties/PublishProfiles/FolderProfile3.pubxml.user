@@ -1,13 +1,11 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <!--
-Este archivo se usa en el proceso de publicación y empaquetado del proyecto web. Para personalizar el comportamiento de este proceso,
-edite el archivo MSBuild. Visite https://go.microsoft.com/fwlink/?LinkID=208121 para obtener más información. 
+https://go.microsoft.com/fwlink/?LinkID=208121. 
 -->
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
-    <TimeStampOfAssociatedLegacyPublishXmlFile />
-    <_PublishTargetUrl>C:\inetpub\wwwroot\WebApi_3R_Dominion</_PublishTargetUrl>
-    <History>True|2023-09-04T22:53:31.0192410Z;True|2022-05-05T15:42:45.0030702-05:00;True|2022-03-22T10:14:50.3463620-05:00;True|2022-03-15T11:45:28.8758793-05:00;True|2022-03-15T11:24:57.8489388-05:00;True|2022-03-14T11:22:39.3327421-05:00;True|2022-03-07T09:15:22.5305889-05:00;True|2022-03-04T15:56:35.5972178-05:00;False|2022-03-04T15:55:09.4736987-05:00;True|2022-03-04T14:51:58.5169609-05:00;True|2022-03-04T12:08:26.1286439-05:00;True|2022-03-04T11:28:55.9457714-05:00;True|2022-03-04T09:58:20.5501857-05:00;True|2022-03-04T09:34:35.4413147-05:00;True|2022-03-02T15:00:39.5013951-05:00;True|2022-03-02T14:57:28.1305254-05:00;True|2022-03-02T14:47:23.4347063-05:00;True|2022-02-24T15:20:58.1441156-05:00;True|2021-07-16T18:19:05.1448244-05:00;True|2021-07-07T09:40:52.4496585-05:00;True|2021-07-06T18:13:27.3702563-05:00;True|2021-07-06T18:05:12.6237750-05:00;True|2021-07-06T17:51:32.0908896-05:00;True|2021-07-06T17:50:44.0408132-05:00;True|2021-07-06T14:40:47.4613509-05:00;</History>
+    <_PublishTargetUrl>C:\inetpub\wwwroot\WebApi_PA_Peru</_PublishTargetUrl>
+    <History>True|2023-09-04T23:04:05.8876113Z;</History>
   </PropertyGroup>
   <ItemGroup>
     <File Include="Archivos/Descargas/XXXX.txt">
@@ -385,29 +383,11 @@ edite el archivo MSBuild. Visite https://go.microsoft.com/fwlink/?LinkID=208121 
     <File Include="bin/ThoughtWorks.QRCode.dll">
       <publishTime>09/04/2023 16:37:45</publishTime>
     </File>
-    <File Include="bin/WebApi_3R_Dominion.dll">
-      <publishTime>05/05/2022 15:42:43</publishTime>
-    </File>
-    <File Include="bin/WebApi_3R_Dominion.pdb">
-      <publishTime>05/05/2022 15:42:43</publishTime>
-    </File>
-    <File Include="bin/WebApi_GoRelax.dll">
-      <publishTime>01/01/0001 00:00:00</publishTime>
-    </File>
-    <File Include="bin/WebApi_GoRelax.pdb">
-      <publishTime>01/01/0001 00:00:00</publishTime>
-    </File>
     <File Include="bin/WebApi_PA_Peru.dll">
-      <publishTime>09/04/2023 17:53:28</publishTime>
+      <publishTime>09/04/2023 18:04:04</publishTime>
     </File>
     <File Include="bin/WebApi_PA_Peru.pdb">
-      <publishTime>09/04/2023 17:53:28</publishTime>
-    </File>
-    <File Include="bin/WebApi_Trinidad.dll">
-      <publishTime>05/26/2020 19:44:32</publishTime>
-    </File>
-    <File Include="bin/WebApi_Trinidad.pdb">
-      <publishTime>05/26/2020 19:44:32</publishTime>
+      <publishTime>09/04/2023 18:04:04</publishTime>
     </File>
     <File Include="bin/WebGrease.dll">
       <publishTime>09/04/2023 16:37:45</publishTime>
@@ -524,7 +504,7 @@ edite el archivo MSBuild. Visite https://go.microsoft.com/fwlink/?LinkID=208121 
       <publishTime>09/04/2023 16:37:44</publishTime>
     </File>
     <File Include="Web.config">
-      <publishTime>09/04/2023 17:53:29</publishTime>
+      <publishTime>09/04/2023 18:04:04</publishTime>
     </File>
   </ItemGroup>
 </Project>

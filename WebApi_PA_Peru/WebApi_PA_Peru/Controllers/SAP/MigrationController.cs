@@ -106,6 +106,34 @@ namespace WebApi_PA_Peru.Controllers.SAP
             return resultado;
         }
 
+        [HttpPost]
+        [Route("api/Migration/saveUpdateEmployee")]
+        public object saveUpdateEmployee(PersonalSap_E objPersona)
+        {
+            result res = new result();
+            object resultado = null;
+            try
+            {
+                MigrationBL obj_negocio = new MigrationBL();
+                obj_negocio.set_guardar_persona(objPersona);
+
+                res.ok = true;
+                res.data = null;
+                res.message = "Proceso realizado correctamente";
+
+                resultado = res;
+            }
+            catch (Exception ex)
+            {
+                res.ok = false;
+                res.data = null;
+                res.message = ex.Message;
+
+                resultado = res;
+            }
+            return resultado;
+        }
+
 
     }
 }
